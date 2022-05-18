@@ -11,7 +11,7 @@ export class Par extends Numero {
     }
     
     identidad() {
-        console.log(`Valor: ${valor} y es un PAR.`)
+        console.log(`Valor: ${this.valor} y es un PAR.`)
     }
 }
 
@@ -22,7 +22,7 @@ export class Impar extends Numero {
     }
     
     identidad() {
-        console.log(`Valor: ${valor} y es un IMPAR.`)
+        console.log(`Valor: ${this.valor} y es un IMPAR.`)
     }   
 }
 

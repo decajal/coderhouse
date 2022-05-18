@@ -54,8 +54,8 @@ if (segundoNumero > primerNumero) {
 let numIntermedios = []
     if (iguales == true) console.log("Se ingresó el mismo número, su resta da 0 y su división 1")
 else {
-    let contar = -1
-    for (let i = menor; i < mayor; i++) {
+    let contar = 0
+    for (let i = menor+1; i < mayor; i++) {
         contar++
         numIntermedios.push(i)
     }
@@ -68,7 +68,7 @@ else {
     console
     console.log(`Números intermedios: ${numIntermedios.join("-")}`)
     let orden = 1
-    for (let i = 1; i < numIntermedios.length; i++) {
+    for (let i = 0; i<numIntermedios.length; i++) {
         if (esPar(numIntermedios[i]) == "PAR") {
             const num = new Par(numIntermedios[i], orden)
             numPares.push(num)
@@ -83,9 +83,15 @@ else {
         orden++
     }
     console.log(`De ellos, ${numPares.length} son PARES, ${numImpares.length} son IMPARES y ${numPrimos.length} son PRIMOS.`)    
+    console.log("Números Pares:")
+    const numParesOriginal = {...numPares}
+    console.log(numParesOriginal)
+    console.log("Eliminamos el primero elemento de la lista: " + numPares.shift().valor)
     console.log(numPares)
-    console.log(numImpares)
-    //console.log(numPrimos)
+    console.log("Números Impares:")
+    numImpares.reverse()
+    numImpares.forEach(x => x.identidad())
+    console.log("Números Primos:")
     numPrimos.forEach(x => x.identidad())   
 }
 

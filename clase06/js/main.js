@@ -79,7 +79,7 @@ for (let i = 0; i < array2.length; i++) {
 const array = ["Hola", "Chau, 1, true"]
 let array2 = [3, 5]
 
-array2.pop() // el operador shift quita el primer elemento del arreglo
+array2.pop()
 console.log(array)
 console.log(array2)
 
@@ -92,8 +92,8 @@ for (let i = 0; i < array2.length; i++) {
 const array = ["Hola", "Chau, 1, true"]
 let array2 = [3, 5]
 
-console.log(array2.pop())   // elimina y muestra el elemento eliminado
-console.log(array2.shift()) // elimina y muestra el elemento eliminado
+console.log(array2.pop())   // el operador pop quita el último elemento del arreglo
+console.log(array2.shift()) // el operador shift quita el primer elemento del arreglo
 */
 
 /*
@@ -106,7 +106,7 @@ personas.splice(4, 1)   // para eliminar SOLAMENTE la posición 4 (1 dice los el
 /*
 // El método JOIN: devuelve un solo string donde concatena los elementos uno por uno separador por un operador que le ingreso
 const personas = ["Juan", "Manuel", "Maria", "Lucas", "Ana", "Lucia", "Paola"]
-console.log(personas.join("-"))   // para eliminar SOLAMENTE la posición 4 (1 dice los elementos a eliminar a partir de la posición 4
+console.log(personas.join("-"))
 */
 
 /*
