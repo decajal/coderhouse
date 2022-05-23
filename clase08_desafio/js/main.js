@@ -93,29 +93,19 @@ else {
     console.log(`De ellos, ${numPares.length} son PARES, ${numImpares.length} son IMPARES y ${numPrimos.length} son PRIMOS.`)
     divMuestra.innerHTML += `<p>De ellos, ${numPares.length} son PARES, ${numImpares.length} son IMPARES y ${numPrimos.length} son PRIMOS.</p>`
     
-    const numParesOriginal = {...numPares}
-    
-    // ================================================
-    // console.log("Números Pares:")
-    // console.log(numParesOriginal)
-     divMuestra.innerHTML += `<p>Números Pares:<ul>`
-
-    Object.keys(numParesOriginal).forEach(function(x){
-        let v = numParesOriginal[x]
-        console.log(v.valor)
-        divMuestra.innerHTML += `<li>Número: ${v.valor}</li>`
+    //================================================
+    const numParesOriginal = {...numPares}    
+    divMuestra.innerHTML += `<p>Números Pares (listado original):<ul>`
+    Object.keys(numParesOriginal).forEach(function(x) {
+        let element = numParesOriginal[x]
+        console.log(`Número: ${element.valor}`) // muestra por consola
+        divMuestra.innerHTML += `<li>Número: ${element.valor}</li>` // lo manda al DOM
     });
+    // éste código da error en todas las pruebas y no encontré la forma de solucionarlo: el error lo da sobre el listado "numParesOriginal"
 
-
-
-    // console.log(typeof(numPares))
-    // console.log(typeof(numParesOriginal))
-
-    //numPares.forEach(x => console.log(`Número: ${x.valor}`))
     // numParesOriginal.forEach(x => {
-    //     divMuestra.innerHTML += `<li>Número: ${x}</li>`
+    //     divMuestra.innerHTML += `<li>Número: ${x.valor}</li>`
     // });
-
 
     //numParesOriginal.forEach(x => divMuestra.innerHTML += `<li>${x.valor}</li>`)
     
@@ -125,8 +115,7 @@ else {
     // }   
     divMuestra.innerHTML += `</ul></p>`
     //================================================
-    
-    
+        
     let eliminado = numPares.shift().valor
     console.log("Eliminamos el primero elemento de la lista: " + eliminado)
     divMuestra.innerHTML += `<p>Eliminamos el primero elemento de la lista: ${eliminado}<ul>`
@@ -136,7 +125,6 @@ else {
     });
     divMuestra.innerHTML += "</ul></p>"
 
-
     console.log("Números Impares:")
     divMuestra.innerHTML += "<p>Números Impares:<ul>"
     numImpares.reverse()
@@ -145,7 +133,6 @@ else {
         divMuestra.innerHTML += `<li>Número: ${x.valor}</li>`
     });
     divMuestra.innerHTML += "</ul></p>"
-    
     
     console.log("Números Primos:")
     divMuestra.innerHTML += "<p>Números Primos:<ul>"
