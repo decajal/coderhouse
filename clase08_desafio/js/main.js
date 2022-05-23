@@ -96,17 +96,35 @@ else {
     const numParesOriginal = {...numPares}
     
     // ================================================
-    console.log("Números Pares:")
-    console.log(numParesOriginal)
-    divMuestra.innerHTML += `<p>Números Pares:<ul>`
+    // console.log("Números Pares:")
+    // console.log(numParesOriginal)
+     divMuestra.innerHTML += `<p>Números Pares:<ul>`
 
-    numPares.forEach(x => console.log(`Número: ${x.valor}`))
-    for(let num in numPares) {
-        divMuestra.innerHTML += `<li>${num.valor}</li>`;
-        console.log(x.valor)
-    }   
-     divMuestra.innerHTML += `</ul></p>`
-    // ================================================
+    Object.keys(numParesOriginal).forEach(function(x){
+        let v = numParesOriginal[x]
+        console.log(v.valor)
+        divMuestra.innerHTML += `<li>Número: ${v.valor}</li>`
+    });
+
+
+
+    // console.log(typeof(numPares))
+    // console.log(typeof(numParesOriginal))
+
+    //numPares.forEach(x => console.log(`Número: ${x.valor}`))
+    // numParesOriginal.forEach(x => {
+    //     divMuestra.innerHTML += `<li>Número: ${x}</li>`
+    // });
+
+
+    //numParesOriginal.forEach(x => divMuestra.innerHTML += `<li>${x.valor}</li>`)
+    
+    // for(let num in numPares) {
+    //     divMuestra.innerHTML += `<li>${num.valor}</li>`;
+    //     //console.log(x.valor)
+    // }   
+    divMuestra.innerHTML += `</ul></p>`
+    //================================================
     
     
     let eliminado = numPares.shift().valor
