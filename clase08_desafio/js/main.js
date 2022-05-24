@@ -1,7 +1,7 @@
 /*
     Curso Coderhouse Back-End - Personal de Teco
     Nombre: Diego Cajal (decajalperez@teco.com.ar)
-    Desafio: incorporar array
+    Desafio: Elementos del DOM
     Fecha 23/05/2022
     Enunciado: Traslada al proyecto integrador el concepto de objetos, visto en la clase de hoy. En función del
         tipo de simulador que hayas elegido deberás:
@@ -75,6 +75,7 @@ else {
     // recorremos la lista de elementos
     console.log(`Números intermedios: ${numIntermedios.join("-")}`)
     divMuestra.innerHTML += `<p>Números intermedios: ${numIntermedios.join("-")}</p>`
+
     let orden = 1
     for (let i = 0; i<numIntermedios.length; i++) {
         if (esPar(numIntermedios[i]) == "PAR") {
