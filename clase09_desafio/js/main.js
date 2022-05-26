@@ -46,8 +46,6 @@ const esPrimo = (numero) => {
 const suma = (num1, num2) => num1 + num2
 const producto = (num1, num2) => num1 * num2
 
-
-//let iguales = false
 let primerNumero, segundoNumero
 form.addEventListener('submit', (e) => {
     e.preventDefault()
