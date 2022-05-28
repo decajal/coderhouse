@@ -65,10 +65,11 @@ form.addEventListener('submit', (e) => {
     registrarElemento(iElemento)
     cliente = buscarCliente(iCliente)
 
-    registrarTicket(iProblema)
+    let hoy = new Date()
+    registrarTicket(iProblema, hoy)
     form.reset()
-    const hoy = new Date()
-    divResultados.innerHTML = hoy.toLocaleString('es-ES', { timeZone: 'UTC' })
+    
+    //divResultados.innerHTML = hoy.toLocaleString('es-ES', { timeZone: 'UTC' })
 })
 
 function validarIngreso(iElemento, iCliente, iProblema) {
@@ -89,8 +90,8 @@ function buscarCliente(iCliente) {
     return cliente = clientes.find(x => x.nombre == iCliente)
 }
 
-function registrarTicket(iProblema) {
-    let ticket = new Ticket(numero, cliente, elemento, iProblema, mecanico)
+function registrarTicket(iProblema, fecha) {
+    let ticket = new Ticket(numero, cliente, elemento, iProblema, mecanico, fecha)
     tickets.push(ticket)
     numero++
 }
@@ -105,16 +106,33 @@ btMostrar.addEventListener('click', (e) => {
 
     tickets.forEach((e, i) => {
         divTickets.innerHTML += `
-            <div class="card" id="t${i}" style="width: 18rem; margin:5px">
-                <div class="card-body">
-                    <h5 class="card-title">Ticket Número: ${e.numero}</h5>
-                    <p class="card-text">Elemento: ${e.elemento.nombre}</p>
-                    <p class="card-text">Cliente: ${e.cliente?.mostrarNombres() || "Cliente no cargado"}</p>
-                    <p class="card-text">Mecanico: ${e.mecanico.mostrarNombres()}</p>
-                    <p class="card-text">Problema: ${e.problema}</p>
-                <!-- <button class="btn btn-danger" >Eliminar Persona </button>  -->
+            <div class="card" id="t${i}" style="width: 18rem; padding: 0px">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2"><small>Num: ${e.numero}</small></div>
+                        <div class="p-2"><small>${ formatDate(e.fecha)}</small></div>
+                    </div>
                 </div>
-            </div>    
+                <div class="card-body"">    
+                    <h5 class="card-title">Ticket de Taller</h5>
+                    <p class="card-text">Pedido del Cliente: ${e.problema}</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Elemento: ${e.elemento.nombre}</li>
+                        <li class="list-group-item">Cliente: ${e.cliente?.mostrarNombres() || "Cliente no cargado"}</li>
+                        <li class="list-group-item">Mecánico: ${e.mecanico.mostrarNombres()}</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card-link">Procesar</a>
+                    <a href="#" class="card-link">Retitar Elemento</a>
+                </div>
+            </div>
     `        
     });
 })
+
+const formatDate = (currentDate) => {
+    let month = currentDate.getMonth() + 1
+    return currentDate.getDate() + "-" + (month < 10 ? `0${month}` : month) + "-" + currentDate.getFullYear()
+}
+
