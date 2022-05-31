@@ -24,9 +24,17 @@ import { Ticket } from "./clases/Ticket.js"
 const tickets = []
 let numero = 1
 
+//const linkNuevoTicket = document.getElementById('')
 const form = document.getElementById('formIngreso')
 const btIngresar = document.getElementById('btIngresar')
 const divResultados = document.getElementById("divResultados")
+const divContainer = document.getElementById('divContainer')
+
+btIngresar.addEventListener('click', (e) => 
+{
+    e.preventDefault()
+    formIngresoTicket()
+})
 
 form.addEventListener('submit', (e) =>
 {
@@ -137,3 +145,35 @@ const formatDate = (currentDate) =>
     return (day < 10 ? `0${day}` : day) + "-" + (month < 10 ? `0${month}` : month) + "-" + currentDate.getFullYear()
 }
 
+function formIngresoTicket()
+{
+    let html = ""
+    html =
+    `
+        <div class="formulario">
+            <form id="formIngreso">
+                <div class="mb-3">
+                    <label class="form-label" for="elemento">Elemento</label>
+                    <input id="elemento" class="form-control" type="text" placeholder="Ingrese el elemento que necesita reparar"
+                        aria-label="Ingrese el elemento que necesita reparar" name="ingresoElemento">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="cliente">Cliente</label>
+                    <input id="cliente" class="form-control" type="text" placeholder="Ingrese el cliente"
+                        aria-label="Ingrese el cliente" name="ingresoCliente">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="problema">Problema</label>
+                    <textarea id="problema" class="form-control" aria-label="With textarea" placeholder="Ingrese la descripción del problema"
+                        name="problema"></textarea>
+                </div>                
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+                <button id="btMostrar" class="btn btn-secondary">Mostrar Tickets</button>
+            </form>
+        </div>
+
+        <div class="card-body" id="divResultados" style="margin: 3px"></div>
+        <div class="row card-body" id="divTickets" style="margin: 3px"></div>
+    `
+    divContainer.innerHTML = html
+}
