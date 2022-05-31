@@ -1,8 +1,8 @@
 /*
     Curso Coderhouse Back-End - Personal de Teco
     Nombre: Diego Cajal (decajalperez@teco.com.ar)
-    Proyecto Final: Primera Entrega
-    Fecha 30/05/2022
+    Proyecto Final: Preview de Segunda Entrega
+    Fecha 31/05/2022
     Descripción: Una parte de un sistema existente, la parte de taller.
         Se tiene el ingreso de elementos que son para su mantenimiento/reparación en un taller.
         Se cuenta con lo siguiente
@@ -25,6 +25,7 @@ const tickets = []
 let numero = 1
 
 const form = document.getElementById('formIngreso')
+const btIngresar = document.getElementById('btIngresar')
 const divResultados = document.getElementById("divResultados")
 
 form.addEventListener('submit', (e) =>
@@ -50,22 +51,17 @@ form.addEventListener('submit', (e) =>
     registrarTicket(iProblema, fechaIngreso)
 
     form.reset()
-
-    Toastify({
-        text: "Producto añadido al carrito",
-        duration: 2000,
-
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-          background: "linear-gradient(to bottom right, #340138, #C32057)",
-        },
-        onClick: function(){
-        } // Callback after click
-    }).showToast();
+    mjsNuevoTicket() // <= nueva librería usada
 })
+
+const mjsNuevoTicket = () =>
+{
+    Swal.fire(
+        "Ingreso registrado",
+        "Nuevo ticket generado",
+        "success",
+      )
+}
 
 function validarIngreso(iElemento, iCliente, iProblema)
 {
