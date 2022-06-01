@@ -20,47 +20,55 @@ import { Repuesto, repuestos } from "./clases/Repuesto.js"
 import { Servicio, servicios } from "./clases/Servicio.js"
 import { Elemento } from "./clases/Elemento.js"
 import { Ticket } from "./clases/Ticket.js"
+import { mostrarTickets } from "./utiles/listadoTickets.js"
 
 const tickets = []
 let numero = 1
 
 //const linkNuevoTicket = document.getElementById('')
-const form = document.getElementById('formIngreso')
-const btIngresar = document.getElementById('btIngresar')
+//const form = document.getElementById('formIngreso')
+const lkIngresar = document.getElementById('lkIngresar')
+const lkMostrar = document.getElementById('lkMostrar')
 const divResultados = document.getElementById("divResultados")
 const divContainer = document.getElementById('divContainer')
 
-btIngresar.addEventListener('click', (e) => 
+lkIngresar.addEventListener('click', (e) => 
 {
     e.preventDefault()
     formIngresoTicket()
 })
 
-form.addEventListener('submit', (e) =>
+lkMostrar.addEventListener('click', (e) => 
 {
     e.preventDefault()
-
-    let iElemento, iCliente, iProblema
-    let dataForm = new FormData(e.target)
-    iElemento = dataForm.get('ingresoElemento')
-    iCliente = dataForm.get('ingresoCliente')
-    iProblema = dataForm.get('problema')
-
-    const html = validarIngreso(iElemento, iCliente, iProblema)
-    if (html.length != 0) {
-        divResultados.innerHTML = html
-        return    
-    }
-    divResultados.innerHTML = ""
-    registrarElemento(iElemento)
-    cliente = buscarCliente(iCliente)
-
-    let fechaIngreso = new Date()
-    registrarTicket(iProblema, fechaIngreso)
-
-    form.reset()
-    mjsNuevoTicket() // <= nueva librería usada
+    mostrarTickets(tickets)
 })
+
+// form.addEventListener('submit', (e) =>
+// {
+//     e.preventDefault()
+
+//     let iElemento, iCliente, iProblema
+//     let dataForm = new FormData(e.target)
+//     iElemento = dataForm.get('ingresoElemento')
+//     iCliente = dataForm.get('ingresoCliente')
+//     iProblema = dataForm.get('problema')
+
+//     const html = validarIngreso(iElemento, iCliente, iProblema)
+//     if (html.length != 0) {
+//         divResultados.innerHTML = html
+//         return    
+//     }
+//     divResultados.innerHTML = ""
+//     registrarElemento(iElemento)
+//     cliente = buscarCliente(iCliente)
+
+//     let fechaIngreso = new Date()
+//     registrarTicket(iProblema, fechaIngreso)
+
+//     form.reset()
+//     mjsNuevoTicket() // <= nueva librería usada
+// })
 
 const mjsNuevoTicket = () =>
 {
@@ -83,9 +91,7 @@ function validarIngreso(iElemento, iCliente, iProblema)
 let elemento
 function registrarElemento(iElemento)
 {
-    elemento = new Elemento(iElemento)
-
-    
+    elemento = new Elemento(iElemento)   
 }
 
 let cliente
@@ -101,42 +107,42 @@ function registrarTicket(iProblema, fecha)
     numero++
 }
 
-let btMostrar = document.getElementById('btMostrar')
+//let btMostrar = document.getElementById('btMostrar')
 let divTickets = document.getElementById('divTickets')
 
-btMostrar.addEventListener('click', (e) => 
-{
-    e.preventDefault()
-    divResultados.innerHTML = ""
-    divTickets.innerHTML = ""
+// btMostrar.addEventListener('click', (e) => 
+// {
+//     e.preventDefault()
+//     divResultados.innerHTML = ""
+//     divTickets.innerHTML = ""
 
-    tickets.forEach((e, i) => {
-        divTickets.innerHTML += `
-            <div class="card" id="t${i}" style="width: 18rem; padding: 0px">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        <div class="p-2"><small>Num: ${e.numero}</small></div>
-                        <div class="p-2"><small>${ formatDate(e.fecha)}</small></div>
-                    </div>
-                </div>
-                <div class="card-body"">    
-                    <h5 class="card-title">Ticket de Taller</h5>
-                    <p class="card-text">Pedido del Cliente: ${e.problema}</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Elemento: ${e.elemento.nombre}</li>
-                        <li class="list-group-item">Cliente: ${e.cliente?.mostrarNombres() || "Cliente no cargado"}</li>
-                        <li class="list-group-item">Mecánico: ${e.mecanico.mostrarNombres()}</li>
-                    </ul>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="card-link">Procesar</a>
-                    <a href="#" class="card-link">Retitar Elemento</a>
-                </div>
-            </div>
-    `        
-    });
+//     tickets.forEach((e, i) => {
+//         divTickets.innerHTML += `
+//             <div class="card" id="t${i}" style="width: 18rem; padding: 0px">
+//                 <div class="card-header">
+//                     <div class="d-flex justify-content-between">
+//                         <div class="p-2"><small>Num: ${e.numero}</small></div>
+//                         <div class="p-2"><small>${ formatDate(e.fecha)}</small></div>
+//                     </div>
+//                 </div>
+//                 <div class="card-body"">    
+//                     <h5 class="card-title">Ticket de Taller</h5>
+//                     <p class="card-text">Pedido del Cliente: ${e.problema}</p>
+//                     <ul class="list-group list-group-flush">
+//                         <li class="list-group-item">Elemento: ${e.elemento.nombre}</li>
+//                         <li class="list-group-item">Cliente: ${e.cliente?.mostrarNombres() || "Cliente no cargado"}</li>
+//                         <li class="list-group-item">Mecánico: ${e.mecanico.mostrarNombres()}</li>
+//                     </ul>
+//                 </div>
+//                 <div class="card-footer">
+//                     <a href="#" class="card-link">Procesar</a>
+//                     <a href="#" class="card-link">Retitar Elemento</a>
+//                 </div>
+//             </div>
+//     `        
+//     });
 
-})
+// })
 
 const formatDate = (currentDate) =>
 {
@@ -148,7 +154,7 @@ const formatDate = (currentDate) =>
 function formIngresoTicket()
 {
     let html = ""
-    html =
+    html +=
     `
         <div class="formulario">
             <form id="formIngreso">
@@ -176,4 +182,67 @@ function formIngresoTicket()
         <div class="row card-body" id="divTickets" style="margin: 3px"></div>
     `
     divContainer.innerHTML = html
+
+    let form = document.getElementById('formIngreso')
+    form.addEventListener('submit', (e) => 
+    {
+        e.preventDefault()
+
+        let iElemento, iCliente, iProblema
+        let dataForm = new FormData(e.target)
+        iElemento = dataForm.get('ingresoElemento')
+        iCliente = dataForm.get('ingresoCliente')
+        iProblema = dataForm.get('problema')
+    
+        const html = validarIngreso(iElemento, iCliente, iProblema)
+        if (html.length != 0) {
+            divResultados.innerHTML = html
+            return    
+        }
+        divResultados.innerHTML = ""
+        registrarElemento(iElemento)
+        cliente = buscarCliente(iCliente)
+    
+        let fechaIngreso = new Date()
+        registrarTicket(iProblema, fechaIngreso)
+    
+        form.reset()
+        mjsNuevoTicket() // <= nueva librería usada
+    })
+
+    document.getElementById('btMostrar').addEventListener('click', (e) => 
+    {
+        e.preventDefault()
+
+        divResultados.innerHTML = ""
+        divTickets.innerHTML = ""
+    
+        tickets.forEach((e, i) => {
+            divTickets.innerHTML += `
+                <div class="card" id="t${i}" style="width: 18rem; padding: 0px">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-2"><small>Num: ${e.numero}</small></div>
+                            <div class="p-2"><small>${ formatDate(e.fecha)}</small></div>
+                        </div>
+                    </div>
+                    <div class="card-body"">    
+                        <h5 class="card-title">Ticket de Taller</h5>
+                        <p class="card-text">Pedido del Cliente: ${e.problema}</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Elemento: ${e.elemento.nombre}</li>
+                            <li class="list-group-item">Cliente: ${e.cliente?.mostrarNombres() || "Cliente no cargado"}</li>
+                            <li class="list-group-item">Mecánico: ${e.mecanico.mostrarNombres()}</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">Procesar</a>
+                        <a href="#" class="card-link">Retitar Elemento</a>
+                    </div>
+                </div>
+        `        
+        });
+    
+    })
+
 }
