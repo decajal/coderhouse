@@ -1,15 +1,38 @@
 import { Elemento } from "../clases/Elemento.js"
-import { Cliente, clientes } from "../clases/Cliente.js"
+import { clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
 import { mecanicoUnico } from "../clases/Mecanico.js"
 
 let divContainer = document.getElementById('divContainer')
+let divTitles = document.getElementById('divTitles')
+
 export function listarTickets()
+{
+    divTitles.innerHTML = htmlTitleList()
+    listar()
+}
+
+function listar()
 {
     let html = `<div class="card-body row" id="divTickets" style="margin: 3px">`
     tickets.forEach((e, i) => {
-        html +=
-        `
+        html += htmlCard(e, i)
+    });
+    html += `</div>`
+    divContainer.innerHTML = html;
+}
+
+function htmlTitleList()
+{
+    let title = `<h3>Tickets</h3>`
+    title += `<p class="lead">Listado de Tickets en el Taller</p>`
+    return title
+}
+
+function htmlCard(e, i)
+{
+    const card =
+    `
         <div class="card" id="t${i}" style="width: 18rem; padding: 0px" style="margin: 3px">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
@@ -32,9 +55,7 @@ export function listarTickets()
             </div>
         </div>
     `
-    });
-    html += `</div>`
-    divContainer.innerHTML = html;
+    return card
 }
 
 const formatDate = (currentDate) =>
@@ -47,32 +68,12 @@ const formatDate = (currentDate) =>
 //===================== Formulario de Ingreso
 export function crearFormulario()
 {
-    //let html = ""
-    // html +=
-    // `
-    //     <div class="formulario">
-    //         <form id="formIngreso">
-    //             <div class="mb-3">
-    //                 <label class="form-label" for="elemento">Elemento</label>
-    //                 <input id="elemento" class="form-control" type="text" placeholder="Ingrese el elemento que necesita reparar"
-    //                     aria-label="Ingrese el elemento que necesita reparar" name="ingresoElemento">
-    //             </div>
-    //             <div class="mb-3">
-    //                 <label class="form-label" for="cliente">Cliente</label>
-    //                 <input id="cliente" class="form-control" type="text" placeholder="Ingrese el cliente"
-    //                     aria-label="Ingrese el cliente" name="ingresoCliente">
-    //             </div>
-    //             <div class="mb-3">
-    //                 <label class="form-label" for="problema">Problema</label>
-    //                 <textarea id="problema" class="form-control" aria-label="With textarea" placeholder="Ingrese la descripción del problema"
-    //                     name="problema"></textarea>
-    //             </div>                
-    //             <button type="submit" class="btn btn-primary">Ingresar</button>
-    //         </form>
-    //     </div>
-    // `
-    //divContainer.innerHTML = html
-    
+    divTitles.innerHTML = htmlTitleForm()
+    crear()
+}
+
+function crear()
+{
     divContainer.innerHTML = htmlForm()
 
     let form = document.getElementById('formIngreso')
@@ -88,10 +89,13 @@ export function crearFormulario()
         iProblema = dataForm.get('problema')
     
         const html = validarIngreso(iElemento, iCliente, iProblema)
+        const divMensaje = document.getElementById('divMensaje')
+        divMensaje.innerHTML = ""
         if (html.length != 0) {
-            divResultados.innerHTML = html
+            divMensaje.innerHTML = html
             return    
         }
+
         registrarElemento(iElemento)
         cliente = buscarCliente(iCliente)
     
@@ -102,6 +106,14 @@ export function crearFormulario()
         mjsNuevoTicket()
     })
 }
+
+function htmlTitleForm()
+{
+    let title = `<h3>Formulario</h3>`
+    title += `<p class="lead">Ingreso de Elementos al Taller, generación de Tickets</p>`
+    return title
+}
+
 
 function htmlForm()
 {
@@ -127,6 +139,7 @@ function htmlForm()
             <button type="submit" class="btn btn-primary">Ingresar</button>
         </form>
     </div>
+    <div id="divMensaje" ></div>
     `
     return form
 }
