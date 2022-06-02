@@ -19,8 +19,8 @@ import { listarServicios } from "./utilidades/utilServicios.js"
 import { mostrarDescripcion } from "./utilidades/utilDescripcion.js"
 import { listarClientes } from "./utilidades/utilClientes.js"
 
-let divContainer = document.getElementById('divContainer')
-let divTitles = document.getElementById('divTitles')
+export const divContainer = document.getElementById('divContainer')
+export const divTitles = document.getElementById('divTitles')
 
 const taller = document.getElementById('taller')
 taller.addEventListener('click', (e) =>
@@ -74,3 +74,24 @@ listadoClientes.addEventListener('click', (e) =>
     divContainer.innerHTML = ``
     listarClientes()
 })
+
+// Crea un mensaje de Alerta que muestra como resultado o advertencia de una acción
+export function crearAlerta(html, tipo)
+{
+    const divAlert = document.createElement('div')
+    divAlert.setAttribute('id', 'liveAlertPlaceholder')
+
+    const alert = (message, type) =>
+    {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+          `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          '</div>'
+        ].join('')  
+        divAlert.append(wrapper)
+    }
+    divMensaje.appendChild(divAlert)
+    alert(html, tipo)
+}

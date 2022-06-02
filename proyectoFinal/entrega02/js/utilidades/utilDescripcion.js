@@ -1,3 +1,5 @@
+import { crearAlerta, divContainer, divTitles } from "../main.js"
+
 export function mostrarDescripcion()
 {
     divTitles.innerHTML = htmlTitle()

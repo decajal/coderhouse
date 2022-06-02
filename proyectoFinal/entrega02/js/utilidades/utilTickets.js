@@ -1,3 +1,4 @@
+import { crearAlerta, divContainer, divTitles } from "../main.js"
 import { Elemento } from "../clases/Elemento.js"
 import { clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
@@ -7,7 +8,14 @@ import { mecanicoUnico } from "../clases/Mecanico.js"
 export function listarTickets()
 {
     divTitles.innerHTML = htmlTitleList()
-    listar()
+    if (tickets.length > 0)
+        listar()
+    else
+    {
+        divContainer.innerHTML += `<div id="divMensaje" style="margin-top:10px;"></div>`
+        crearAlerta('Actualmente no hay tickets cargados. Gracias', 'primary')
+    }
+        
 }
 
 function listar()
@@ -70,6 +78,7 @@ export function crearFormulario()
     crear()
 }
 
+// FORMULARIO DE INGRESO DE ELEMENTOS
 function crear()
 {
     divContainer.innerHTML = htmlForm()
@@ -90,7 +99,8 @@ function crear()
         const divMensaje = document.getElementById('divMensaje')
         divMensaje.innerHTML = ""
         if (html.length != 0) {
-            divMensaje.innerHTML = html
+            crearAlerta(html, 'danger')
+
             return    
         }
 
@@ -101,7 +111,7 @@ function crear()
         registrarTicket(iProblema, fechaIngreso)
     
         form.reset()
-        mjsNuevoTicket()
+        crearAlerta('Nuevo ticket generado', 'success')
     })
 }
 
@@ -112,6 +122,7 @@ function htmlTitleForm()
     return title
 }
 
+// Crea el formulario
 function htmlForm()
 {
     const form = 
@@ -136,32 +147,37 @@ function htmlForm()
             <button type="submit" class="btn btn-primary">Ingresar</button>
         </form>
     </div>
-    <div id="divMensaje" ></div>
+    <div id="divMensaje" style="margin-top:10px;"></div>
     `
     return form
 }
 
+// Valida ingreso de los datos al formulario
 function validarIngreso(iElemento, iCliente, iProblema)
 {
     let html = ""
     html += iElemento.length == 0 ? "<p>No ingresó ningún elemento.</p>" : ""
-    html += iCliente.length == 0 ? "<p>No ingresó ningún cliente.</p>" : ""
-    html += iProblema.length == 0 ? "<p>No ingresó la descripción del problema. Esto es importante, el mecánico utilizará ésta información para su resolución.</p>" : ""
+    html += iCliente.length == 0 ? "<p>No ingresó ningún cliente</p>" : ""
+    html += iProblema.length == 0 ? "<p>No ingresó la descripción del problema. Esto es importante ya que el mecánico la utilizará para su resolución.</p>" : ""
     return html
 }
 
+// crea la Clase Elemento según el ingresado por Formulario
 let elemento
 function registrarElemento(iElemento)
 {
     elemento = new Elemento(iElemento)
 }
 
+// Busca el cliente en el arreglo de clientes
+// parametro: nombre
 let cliente
 function buscarCliente(iCliente)
 {
     return cliente = clientes.find(x => x.nombre == iCliente)
 }
 
+// registra el ticket con la información proporcionada
 const tickets = []
 let numero = 1
 function registrarTicket(iProblema, fecha)
@@ -169,14 +185,5 @@ function registrarTicket(iProblema, fecha)
     let ticket = new Ticket(numero, cliente, elemento, iProblema, mecanicoUnico, fecha)
     tickets.push(ticket)
     numero++
-}
-
-const mjsNuevoTicket = () =>
-{
-    Swal.fire(
-        "Ingreso registrado",
-        "Nuevo ticket generado",
-        "success",
-      )
 }
 

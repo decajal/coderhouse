@@ -1,3 +1,4 @@
+import { crearAlerta, divContainer, divTitles } from "../main.js"
 import { clientes } from "../clases/Cliente.js"
 
 export function listarClientes()
