@@ -6,28 +6,45 @@ export function listarServicios()
     listar()
 }
 
+// Creación del Listado en una tabla
+//  se vale de una librería: https://datatables.net/
 function listar()
-{
-    let html = `<table class="table table-hover">`
-    html += htmlTableThead()
-    html += `<tBody>`
-    servicios.forEach(e => {
-        html += htmlTableTr(e)
-    });
-    html += `<tBody></table>`
-    divContainer.innerHTML = html;
+{  
+    divContainer.innerHTML = htmlTable()
+    const $tablaServicios = $("#tablaServicios").DataTable({
+        ordering: true,
+        searching: true,
+        data: servicios,
+        columns:
+        [
+            {data: "id"},
+            {data: "nombre"},
+            {data: "precio"}
+        ]
+    })
 }
 
+// Creación y Colocación del titúlo
 function htmlTitle()
 {
-    let title = `<h3>Servicios</h3>`
-    title += `<p class="lead">Listado de Servicios que proporciona el Taller</p>`
-    return title
+    let html = `<h3>Servicios</h3>`
+    html += `<p class="lead">Listado de Servicios que proporciona el Taller</p>`
+    return html
 }
 
+// creación de la tabla
+function htmlTable()
+{
+    let html = `<table id="tablaServicios"  class="table table-hover">`
+    html += htmlTableThead()
+    html += `</table>`
+    return html
+}
+
+// Arma la cabecera de la Tabla
 function htmlTableThead()
 {
-    let head = 
+    let html = 
     `
         <thead>
             <tr>
@@ -37,18 +54,24 @@ function htmlTableThead()
             </tr>
         </thead>
     `
-    return head
+    return html
 }
 
-function htmlTableTr(e)
-{
-    let tr =
-    `
-        <tr scope="row">
-            <th scope="row">${e.id}</th>
-            <td>${e.nombre}</td>
-            <td>$ ${e.precio}</td>
-        </tr>
-    `
-    return tr
-}
+/* ============== PARA ELIMINAR ==============
+
+// POR EL USO DE LA LIBRERIA ESTA RUTINA QUEDA OBSOLETA
+// Arma cada fila
+// function htmlTableTr(e)
+// {
+//     let html =
+//     `
+//         <tr scope="row">
+//             <th scope="row">${e.id}</th>
+//             <td>${e.nombre}</td>
+//             <td>$ ${e.precio}</td>
+//         </tr>
+//     `
+//     return html
+// }
+
+*/

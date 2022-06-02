@@ -17,14 +17,34 @@
 import { listarTickets, crearFormulario } from "./utilidades/utilTickets.js"
 import { listarServicios } from "./utilidades/utilServicios.js"
 import { mostrarDescripcion } from "./utilidades/utilDescripcion.js"
+import { listarClientes } from "./utilidades/utilClientes.js"
 
 let divContainer = document.getElementById('divContainer')
 let divTitles = document.getElementById('divTitles')
 
-const ingresarElemento = document.getElementById('ingresarElemento')
-ingresarElemento.addEventListener('click', (e) =>
+const taller = document.getElementById('taller')
+taller.addEventListener('click', (e) =>
 {
     e.preventDefault()
+    divTitles.innerHTML = ``
+    divContainer.innerHTML = ``
+})
+
+const home = document.getElementById('home')
+home.addEventListener('click', (e) =>
+{
+    e.preventDefault()
+    divTitles.innerHTML = ``
+    divContainer.innerHTML = ``
+    mostrarDescripcion()
+})
+
+const ingresoElemento = document.getElementById('ingresoElemento')
+ingresoElemento.addEventListener('click', (e) =>
+{
+    e.preventDefault()
+    divTitles.innerHTML = ``
+    divContainer.innerHTML = ``
     crearFormulario()
 })
 
@@ -32,6 +52,8 @@ const listadoTickets = document.getElementById('listadoTickets')
 listadoTickets.addEventListener('click', (e) =>
 {
     e.preventDefault()
+    divTitles.innerHTML = ``
+    divContainer.innerHTML = ``
     listarTickets()
 })
 
@@ -39,12 +61,16 @@ const listadoServicios = document.getElementById('listadoServicios')
 listadoServicios.addEventListener('click', (e) =>
 {
     e.preventDefault()
+    divTitles.innerHTML = ``
+    divContainer.innerHTML = ``
     listarServicios()
 })
 
-const home = document.getElementById('home')
-home.addEventListener('click', (e) =>
+const listadoClientes = document.getElementById('listadoClientes')
+listadoClientes.addEventListener('click', (e) => 
 {
     e.preventDefault()
-    mostrarDescripcion()
+    divTitles.innerHTML = ``
+    divContainer.innerHTML = ``
+    listarClientes()
 })
