@@ -3,8 +3,6 @@ import { clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
 import { mecanicoUnico } from "../clases/Mecanico.js"
 
-let divContainer = document.getElementById('divContainer')
-let divTitles = document.getElementById('divTitles')
 
 export function listarTickets()
 {
