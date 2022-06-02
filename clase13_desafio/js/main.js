@@ -15,3 +15,5 @@
                 al DOM mediante JS
             - Capturar la tecla ENTER para confirmar alguna acción.
 */
+
+// Trabajo presentado, se usó el proyecto final con la librería sweetAlert2
