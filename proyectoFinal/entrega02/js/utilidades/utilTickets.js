@@ -1,9 +1,11 @@
-import { crearAlerta, divContainer, divTitles } from "../main.js"
+import { crearAlerta, crearMensaje, divContainer, divTitles } from "../main.js"
 import { Elemento } from "../clases/Elemento.js"
 import { clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
 import { mecanicoUnico } from "../clases/Mecanico.js"
 
+export const tickets = [] // Listado de Tickets del Taller
+let numero = 1 // Número de Tickets
 
 export function listarTickets()
 {
@@ -13,21 +15,29 @@ export function listarTickets()
     else
     {
         divContainer.innerHTML += `<div id="divMensaje" style="margin-top:10px;"></div>`
-        crearAlerta('Actualmente no hay tickets cargados. Gracias', 'primary')
+        crearMensaje('Actualmente no hay tickets cargados. Gracias', 'primary')
     }
         
 }
 
 function listar()
 {
-    let html = `<div class="card-body row" id="divTickets" style="margin: 3px">`
+    let html = `<div class="card-body row" id="divTickets">`
     tickets.forEach((e, i) => {
         html += htmlCard(e, i)
     });
     html += `</div>`
     divContainer.innerHTML = html;
+    
+    tickets.forEach((e, i) => {
+        document.getElementById(`t${i}`).lastElementChild.lastElementChild.addEventListener('click', () =>
+        {
+            localStorage.setItem('ticketsXretirar', JSON.stringify(e))
+        })
+    });
 }
 
+// Crea el titulo
 function htmlTitleList()
 {
     let title = `<h3>Tickets</h3>`
@@ -35,11 +45,12 @@ function htmlTitleList()
     return title
 }
 
+// Crea una Card para mostrar el Ticket seleccionado en ella
 function htmlCard(e, i)
 {
     const card =
     `
-        <div class="card" id="t${i}" style="width: 18rem; padding: 0px" style="margin: 3px">
+        <div class="card" id="t${i}" style="width: 18rem; padding: 0px; margin: 3px">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <div class="p-2"><small>Num: ${e.numero}</small></div>
@@ -56,8 +67,7 @@ function htmlCard(e, i)
                 </ul>
             </div>
             <div class="card-footer">
-                <a href="#" class="card-link">Procesar</a>
-                <a href="#" class="card-link">Retitar Elemento</a>
+                <button type="button" class="btn btn-primary btn-sm" id="bt${i}">Preparar Retiro</button>
             </div>
         </div>
     `
@@ -178,8 +188,6 @@ function buscarCliente(iCliente)
 }
 
 // registra el ticket con la información proporcionada
-const tickets = []
-let numero = 1
 function registrarTicket(iProblema, fecha)
 {
     let ticket = new Ticket(numero, cliente, elemento, iProblema, mecanicoUnico, fecha)

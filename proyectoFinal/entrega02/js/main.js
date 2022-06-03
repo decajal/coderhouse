@@ -18,9 +18,19 @@ import { listarTickets, crearFormulario } from "./utilidades/utilTickets.js"
 import { listarServicios } from "./utilidades/utilServicios.js"
 import { mostrarDescripcion } from "./utilidades/utilDescripcion.js"
 import { listarClientes } from "./utilidades/utilClientes.js"
+import { tickets } from "./utilidades/utilTickets.js"
 
 export const divContainer = document.getElementById('divContainer')
 export const divTitles = document.getElementById('divTitles')
+
+// Consulto el localStorage
+let ticketsXretirar = []
+if (localStorage.getItem('ticketsXretirar'))
+    ticketsXretirar = JSON.parse(localStorage.getItem('ticketsXretirar')) // Si no existe, creo un arreglo vacío
+else
+    localStorage.setItem('ticketsXretirar', JSON.stringify(ticketsXretirar)) // si existe lo recupero
+
+
 
 const taller = document.getElementById('taller')
 taller.addEventListener('click', (e) =>
@@ -94,4 +104,16 @@ export function crearAlerta(html, tipo)
     }
     divMensaje.appendChild(divAlert)
     alert(html, tipo)
+}
+
+export function crearMensaje(html, tipo)
+{
+    // <div class="alert alert-primary" role="alert">
+    // A simple light alert—check it out!
+    // </div>
+    const divAlert = document.createElement('div')
+    divAlert.setAttribute('class', `alert alert-${tipo}`)
+    divAlert.setAttribute('role', 'alert')
+    divAlert.innerHTML = html
+    divMensaje.appendChild(divAlert)
 }
