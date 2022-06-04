@@ -143,6 +143,7 @@ document.getElementById('botonMostrar').addEventListener('click', () => {
               localStorage.setItem('productos', JSON.stringify(productos))
            })
         })
+    
     } else {
         divProductos.innerHTML = "<p>No se cargaron productos en el carrito</p>"
     }

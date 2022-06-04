@@ -23,14 +23,9 @@ import { tickets } from "./utilidades/utilTickets.js"
 export const divContainer = document.getElementById('divContainer')
 export const divTitles = document.getElementById('divTitles')
 
-// Consulto el localStorage
-let ticketsXretirar = []
-if (localStorage.getItem('ticketsXretirar'))
-    ticketsXretirar = JSON.parse(localStorage.getItem('ticketsXretirar')) // Si no existe, creo un arreglo vacío
-else
-    localStorage.setItem('ticketsXretirar', JSON.stringify(ticketsXretirar)) // si existe lo recupero
-
-
+let panelTickets = false
+export let tParseados = []
+controlLS()
 
 const taller = document.getElementById('taller')
 taller.addEventListener('click', (e) =>
@@ -44,6 +39,7 @@ const home = document.getElementById('home')
 home.addEventListener('click', (e) =>
 {
     e.preventDefault()
+    panelTickets = false
     divTitles.innerHTML = ``
     divContainer.innerHTML = ``
     mostrarDescripcion()
@@ -53,6 +49,7 @@ const ingresoElemento = document.getElementById('ingresoElemento')
 ingresoElemento.addEventListener('click', (e) =>
 {
     e.preventDefault()
+    panelTickets = false
     divTitles.innerHTML = ``
     divContainer.innerHTML = ``
     crearFormulario()
@@ -62,8 +59,7 @@ const listadoTickets = document.getElementById('listadoTickets')
 listadoTickets.addEventListener('click', (e) =>
 {
     e.preventDefault()
-    divTitles.innerHTML = ``
-    divContainer.innerHTML = ``
+    panelTickets = true
     listarTickets()
 })
 
@@ -71,6 +67,7 @@ const listadoServicios = document.getElementById('listadoServicios')
 listadoServicios.addEventListener('click', (e) =>
 {
     e.preventDefault()
+    panelTickets = false
     divTitles.innerHTML = ``
     divContainer.innerHTML = ``
     listarServicios()
@@ -80,12 +77,13 @@ const listadoClientes = document.getElementById('listadoClientes')
 listadoClientes.addEventListener('click', (e) => 
 {
     e.preventDefault()
+    panelTickets = false
     divTitles.innerHTML = ``
     divContainer.innerHTML = ``
     listarClientes()
 })
 
-// Crea un mensaje de Alerta que muestra como resultado o advertencia de una acción
+// Crea un mensaje de Alerta como resultado o advertencia de una acción. Tiene botón de cierre
 export function crearAlerta(html, tipo)
 {
     const divAlert = document.createElement('div')
@@ -106,14 +104,111 @@ export function crearAlerta(html, tipo)
     alert(html, tipo)
 }
 
+// Crea un msjs y lo muestra (sin botón de cierre)
 export function crearMensaje(html, tipo)
 {
-    // <div class="alert alert-primary" role="alert">
-    // A simple light alert—check it out!
-    // </div>
     const divAlert = document.createElement('div')
     divAlert.setAttribute('class', `alert alert-${tipo}`)
     divAlert.setAttribute('role', 'alert')
     divAlert.innerHTML = html
     divMensaje.appendChild(divAlert)
+}
+
+// variable usada en la ventana modal
+let modalBody = document.getElementsByClassName('modal-body')[0]
+// Botón "Salida" que tiene los Tickets de los elementos que están retirando del Taller
+//  Es para quitarlos del Carrito.
+document.getElementById('btSalida').addEventListener('click', () => 
+{
+    const arregloLocalStorage = JSON.parse(localStorage.getItem('tParseados'))
+    modalBody.innerHTML = ""
+    if (arregloLocalStorage.lenght != 0)
+    {
+        const ticketsEfectivo = []
+        arregloLocalStorage.forEach(eLS =>
+        {
+            const ticketLS = tickets.find(x => x.numero == eLS.numero)
+            if (typeof ticketLS != 'undefined')
+            {
+                let elemento = {numero: ticketLS.numero}
+                ticketsEfectivo.push(elemento)
+                modalBody.innerHTML +=
+                `
+                <div class="card" id="modal-${ticketLS.numero}" style="width: 18rem; margin-top:5px;">
+                    <div class="card-body"">    
+                        <h5 class="card-title">Ticket Num: ${ticketLS.numero}</h5>
+                        <p class="card-text">Cliente: ${ticketLS.cliente?.mostrarNombres() || "Cliente no cargado"}</p>
+                        <p class="card-text">Notas del Mecánico: [Ninguna]</p>
+                        <button class="btn btn-danger">Quitar</button>
+                    </div>
+                </div>
+                `
+            }
+        });
+        ticketsEfectivo.forEach(eC => 
+        {
+            document.getElementById(`modal-${eC.numero}`).lastElementChild.lastElementChild.addEventListener('click', () => 
+            {
+                document.getElementById(`modal-${eC.numero}`).remove()
+                //let index = arregloLocalStorage.findIndex(x => x.numero == eC.numero)
+                ticketsEfectivo.splice(eC.index, 1)
+                localStorage.setItem('tParseados', JSON.stringify(ticketsEfectivo))
+            })
+        })
+    }
+})
+
+// Botón confirmar del "Carrito"
+const btConfirmar = document.getElementById('btConfirmar')
+btConfirmar.addEventListener('click', () =>
+{
+    const arregloLocalStorage = JSON.parse(localStorage.getItem('tParseados'))
+    if (arregloLocalStorage.length != 0 && tickets.length != 0)
+    {
+        arregloLocalStorage.forEach(element => {
+            document.getElementById(`modal-${element.numero}`).remove()
+            let index = tickets.findIndex(x => x.numero == element.numero)
+            tickets.splice(index, 1)
+        });
+        let arr = []
+        localStorage.setItem('tParseados', JSON.stringify(arr))
+        if (panelTickets == true)
+            listarTickets()
+    }
+})
+
+// "Carrito": se tiener un carrito que no es carrito, es decir, los elementos una vez reparados se los tiene que retirar...
+//      entonces, al presionar el botón de "Preparar Retiro" va a ese carrito, digamos que el elemento ya fue reparado y
+//      el cliente se encuentra en el local pidiendo para retirarlo.
+//      con este botón lo dejamos en carrito de salida.
+//      Es diferente que un carrito normal porque debe quitar el elemento de todos lados.
+function controlLS()
+{
+    if (tickets.length == 0)
+        blanquearLS()
+    else
+    {
+        if (localStorage.getItem('tParseados'))
+        {
+            let arr = JSON.parse(localStorage.getItem('tParseados'))
+            arr.forEach(element => {
+                let index = tickets.findIndex(x => x.numero == element.numero)
+                if (index == -1)
+                {
+                    // El local Storage no coincide con los Tickets
+                    // El elemento del LS no existe en realidad
+                    arr.splice(element.index, 1)
+                }
+            });
+            localStorage.setItem('tParseados', JSON.stringify(arr))
+        }
+        else
+            blanquearLS()    
+    }
+}
+
+function blanquearLS()
+{
+    const arr = []
+    localStorage.setItem('tParseados', JSON.stringify(arr)) // si no existe creo uno vacío
 }

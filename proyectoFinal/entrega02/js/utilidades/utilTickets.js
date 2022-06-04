@@ -1,4 +1,4 @@
-import { crearAlerta, crearMensaje, divContainer, divTitles } from "../main.js"
+import { tParseados, crearAlerta, crearMensaje, divContainer, divTitles } from "../main.js"
 import { Elemento } from "../clases/Elemento.js"
 import { clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
@@ -9,11 +9,17 @@ let numero = 1 // Número de Tickets
 
 export function listarTickets()
 {
+    divContainer.innerHTML = ``
     divTitles.innerHTML = htmlTitleList()
     if (tickets.length > 0)
         listar()
     else
     {
+        if (localStorage.getItem('tParseados'))
+        {
+            const arr = []
+            localStorage.setItem('tParseados', JSON.stringify(arr))
+        }
         divContainer.innerHTML += `<div id="divMensaje" style="margin-top:10px;"></div>`
         crearMensaje('Actualmente no hay tickets cargados. Gracias', 'primary')
     }
@@ -30,9 +36,17 @@ function listar()
     divContainer.innerHTML = html;
     
     tickets.forEach((e, i) => {
-        document.getElementById(`t${i}`).lastElementChild.lastElementChild.addEventListener('click', () =>
+        document.getElementById(`t${e.numero}`).lastElementChild.lastElementChild.addEventListener('click', () =>
         {
-            localStorage.setItem('ticketsXretirar', JSON.stringify(e))
+            const tListos = JSON.parse(localStorage.getItem('tParseados'))
+            let indice = tListos.findIndex(x => x.numero == e.numero)
+            if (indice == -1)
+            {
+                // No existe, entonces lo agregamos
+                let elementoQueRetira = {numero: e.numero}
+                tListos.push(elementoQueRetira)
+                localStorage.setItem('tParseados', JSON.stringify(tListos))
+            }
         })
     });
 }
@@ -50,7 +64,7 @@ function htmlCard(e, i)
 {
     const card =
     `
-        <div class="card" id="t${i}" style="width: 18rem; padding: 0px; margin: 3px">
+        <div class="card" id="t${e.numero}" style="width:18rem; padding:0px; margin:3px">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <div class="p-2"><small>Num: ${e.numero}</small></div>
@@ -67,14 +81,14 @@ function htmlCard(e, i)
                 </ul>
             </div>
             <div class="card-footer">
-                <button type="button" class="btn btn-primary btn-sm" id="bt${i}">Preparar Retiro</button>
+                <button type="button" class="btn btn-primary btn-sm" id="bt${e.numero}">Preparar Retiro</button>
             </div>
         </div>
     `
     return card
 }
 
-const formatDate = (currentDate) =>
+export const formatDate = (currentDate) =>
 {
     let month = currentDate.getMonth() + 1
     let day = currentDate.getDate()
@@ -194,4 +208,3 @@ function registrarTicket(iProblema, fecha)
     tickets.push(ticket)
     numero++
 }
-
