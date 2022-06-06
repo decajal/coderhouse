@@ -106,11 +106,7 @@ function promesa(formWeather, url, msg, divContainerCity)
                     </div>
                 `
                 divContainerCity.appendChild(divCard)
-                const link = divCard.querySelector('.card-link')
-                link.addEventListener('click', (e) =>
-                {
-                    document.getElementById(`${name}, ${sys.country}`).remove()
-                })
+                divCard.querySelector('.card-link').addEventListener('click', (e) => { divCard.remove() })
                 msg.textContent = "";
                 formWeather.reset();
             })
