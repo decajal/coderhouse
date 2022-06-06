@@ -15,12 +15,12 @@ form.addEventListener("submit", e =>
     e.preventDefault();
     let dataForm = new FormData(e.target)
 
-    //const inputVal = input.value;
+    // const inputVal = input.value;
     let inputVal = dataForm.get('input-val')
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${inputVal}&appid=${apiKey}&units=metric`;
-    console.log(`URL: ${url}`)
-    console.log(`apiKey: ${apiKey}`)
-    console.log(`inputVal: ${inputVal}`)
+    //console.log(`URL: ${url}`)
+    //console.log(`apiKey: ${apiKey}`)
+    //console.log(`inputVal: ${inputVal}`)
     
     
     // control que no exista ya en la lista

@@ -1,8 +1,8 @@
 /*
     Curso Coderhouse Back-End - Personal de Teco
     Nombre: Diego Cajal (decajalperez@teco.com.ar)
-    Proyecto Final - Segunda Entrega
-    Fecha 01/06/2022
+    Proyecto Final - Desafío uso de Fetch (API)
+    Fecha 05/06/2022
     Descripción: Una parte de un sistema existente, la parte de taller.
         Se tiene el ingreso de elementos que son para su mantenimiento/reparación en un taller.
         Se cuenta con lo siguiente
@@ -19,9 +19,11 @@ import { listarServicios } from "./utilidades/utilServicios.js"
 import { mostrarDescripcion } from "./utilidades/utilDescripcion.js"
 import { listarClientes } from "./utilidades/utilClientes.js"
 import { tickets } from "./utilidades/utilTickets.js"
+import { weather } from "./utilidades/utilWeather.js"
 
-export const divContainer = document.getElementById('divContainer')
 export const divTitles = document.getElementById('divTitles')
+export const divContainer = document.getElementById('divContainer')
+
 
 let panelTickets = false // Para saber si me encuentro parado en el listado de Tickets, si es true debe actualizar esa página
 export let tParseados = [] // Arreglo usado en el localStorage, los tickets parseados para retirar
@@ -31,8 +33,10 @@ const taller = document.getElementById('taller')
 taller.addEventListener('click', (e) =>
 {
     e.preventDefault()
+    panelTickets = false
     divTitles.innerHTML = ``
     divContainer.innerHTML = ``
+    mostrarDescripcion()
 })
 
 const home = document.getElementById('home')
@@ -40,9 +44,7 @@ home.addEventListener('click', (e) =>
 {
     e.preventDefault()
     panelTickets = false
-    divTitles.innerHTML = ``
-    divContainer.innerHTML = ``
-    mostrarDescripcion()
+    weather()
 })
 
 const ingresoElemento = document.getElementById('ingresoElemento')
