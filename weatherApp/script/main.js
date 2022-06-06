@@ -32,19 +32,25 @@ form.addEventListener("submit", e =>
     {
         //2
         const filteredArray = listItemsArray.filter(el => {
-        let content = "";
+            let content = "";
             //athens,gr
-            if (inputVal.includes(",")) {
-            //athens,grrrrrr->invalid country code, so we keep only the first part of inputVal
-            if (inputVal.split(",")[1].length > 2) {
-                inputVal = inputVal.split(",")[0];
-                content = el.querySelector(".city-name span").textContent.toLowerCase();
-            } else {
-                content = el.querySelector(".city-name").dataset.name.toLowerCase();
+            if (inputVal.includes(","))
+            {
+                //athens,grrrrrr->invalid country code, so we keep only the first part of inputVal
+                if (inputVal.split(",")[1].length > 2)
+                {
+                    inputVal = inputVal.split(",")[0];
+                    content = el.querySelector(".city-name span").textContent.toLowerCase();
+                }
+                else
+                {
+                    content = el.querySelector(".city-name").dataset.name.toLowerCase();
+                }
             }
-            } else {
-            //athens
-            content = el.querySelector(".city-name span").textContent.toLowerCase();
+            else
+            {
+                //athens
+                content = el.querySelector(".city-name span").textContent.toLowerCase();
             }
             return content == inputVal.toLowerCase();
         });
