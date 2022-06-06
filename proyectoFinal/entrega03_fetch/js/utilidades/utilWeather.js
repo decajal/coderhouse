@@ -89,9 +89,12 @@ function promesa(formWeather, url, msg, divContainerCity)
             {
                 const {main, name, sys, weather} = data;
                 const icon = `https://openweathermap.org/img/wn/${weather[0]["icon"]}@2x.png`;
-                const htmlCard =
-                `
-                <div class="card" style="width: 18rem; margin-top: 5px; margin-right: 5px;" id="${name}, ${sys.country}">
+                const divCard = document.createElement('div')
+                divCard.classList.add('card')
+                divCard.setAttribute('id', `${name}, ${sys.country}`)
+                divCard.setAttribute('style', 'width: 18rem; margin-top: 5px; margin-right: 5px;')
+                divCard.innerHTML =
+                    `
                     <div class="card-body">
                         <h5 class="card-title">
                             <span>${name}</span><sup>${sys.country}</sup>
@@ -99,14 +102,11 @@ function promesa(formWeather, url, msg, divContainerCity)
                         <h6 class="card-subtitle mb-2 text-muted">${weather[0]["description"]}</h6>
                         <p class="card-text">${Math.round(main.temp)}<sup>°C</sup></p>
                         <p><img class="city-icon" src=${icon} alt=${weather[0]["main"]}></p>
-                        <!-- <figcaption>${weather[0]["description"]}</figcaption> -->
                         <a href="#" class="card-link">Quitar</a>
                     </div>
-                </div>
                 `
-                divContainerCity.innerHTML += htmlCard;
-                const link = document.querySelector(`.result .card-link`)
-                //console.log(link)
+                divContainerCity.appendChild(divCard)
+                const link = divCard.querySelector('.card-link')
                 link.addEventListener('click', (e) =>
                 {
                     document.getElementById(`${name}, ${sys.country}`).remove()
