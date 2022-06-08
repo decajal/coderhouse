@@ -1,3 +1,9 @@
+/*
+    nodeJS
+    Clase 02 07-06-2002
+
+*/
+
 function mostrar()
 {
     let saludo = "Hola, buen día !";

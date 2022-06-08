@@ -1,4 +1,4 @@
-import { tParseados, crearAlerta, crearMensaje, divContainer, divTitles } from "../main.js"
+import { crearAlerta, crearMensaje, divContainer, divTitles } from "../main.js"
 import { Elemento } from "../clases/Elemento.js"
 import { clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
@@ -26,19 +26,40 @@ export function listarTickets()
         
 }
 
+// Crea el titulo
+function htmlTitleList()
+{
+    let title = `<h3>Tickets</h3>`
+    title += `<p class="lead">Listado de Tickets en el Taller</p>`
+    return title
+}
+
 // escribe el listado de tickets (si es que hay un listado que mostrar)
 function listar()
 {
-    let html = `<div class="card-body row" id="divTickets">`
-    tickets.forEach((e, i) => {
-        html += htmlCard(e, i)
-    });
-    html += `</div>`
-    divContainer.innerHTML = html;
-    
-    tickets.forEach((e, i) => {
-        document.getElementById(`t${e.numero}`).lastElementChild.lastElementChild.addEventListener('click', () =>
+    // Acá debería de crear el modal que usaría para mostrar la card con el lilstado de servicios y productos
+    // https://getbootstrap.com/docs/5.2/components/modal/#content
+    // de esa rul sacar el modal y el ejemplo
+
+    divContainer.innerHTML = htmlModal()
+
+    const divCardBody = document.createElement('div')
+    divCardBody.classList.add('card-body')
+    divCardBody.classList.add('row')
+    divCardBody.setAttribute('id', 'divTickets')
+
+    tickets.forEach((e) => {
+        let divCard = htmlCard(e)
+
+        divCard.querySelector('.card-footer .btn-primary').addEventListener('click', () =>
         {
+            // Mostrar el Modal con los datos básicos del ticket y los servicios y los productos
+            const divModalBody = divContainer.querySelector('.modal-body')
+            divModalBody.innerHTML = `<p>Ticket Num: ${e.numero}</p>`
+        })
+        divCard.querySelector('.card-footer .btn-secondary').addEventListener('click', () =>
+        {
+            // A zona de Entrega
             const tListos = JSON.parse(localStorage.getItem('tParseados'))
             let indice = tListos.findIndex(x => x.numero == e.numero)
             if (indice == -1)
@@ -49,29 +70,57 @@ function listar()
                 localStorage.setItem('tParseados', JSON.stringify(tListos))
             }
         })
-    });
+        divCardBody.appendChild(divCard);
+    });  
+    divContainer.appendChild(divCardBody);
 }
 
-// Crea el titulo
-function htmlTitleList()
+// crea el modal que mostrará el ticket para su proceso
+function htmlModal()
 {
-    let title = `<h3>Tickets</h3>`
-    title += `<p class="lead">Listado de Tickets en el Taller</p>`
-    return title
+    let html =
+    `
+        <!-- ===== modal-Card ===== -->
+        <div class="modal fade" id="modal-Card" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel  aria-labelledby="exampleModalLabel" aria-hidden="true">Trabajando sobre el elemento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                
+                    </div>
+              
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btGuardarProceso">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ===== Modal ===== -->
+    `
+    return html
 }
 
 // Crea una Card para mostrar el Ticket seleccionado en ella
-function htmlCard(e, i)
+function htmlCard(e)
 {
+    const divCard = document.createElement('div')
+    divCard.classList.add('card')
+    divCard.setAttribute('id', `t${e.numero}`)
+    divCard.setAttribute('style', 'width:18rem; padding:0px; margin:3px')
+    
     const card =
     `
-        <div class="card" id="t${e.numero}" style="width:18rem; padding:0px; margin:3px">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <div class="p-2"><small>Num: ${e.numero}</small></div>
                     <div class="p-2"><small>${ formatDate(e.fecha)}</small></div>
                 </div>
             </div>
+            
             <div class="card-body"">    
                 <h5 class="card-title">Ticket de Taller</h5>
                 <p class="card-text">Pedido del Cliente: ${e.problema}</p>
@@ -81,14 +130,29 @@ function htmlCard(e, i)
                     <li class="list-group-item">Mecánico: ${e.mecanico.mostrarNombres()}</li>
                 </ul>
             </div>
+            
             <div class="card-footer">
-                <button type="button" class="btn btn-primary btn-sm" id="bt${e.numero}">Preparar Retiro</button>
+                <button type="button"
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal-Card">
+
+                    Procesar ticket
+                </button>
+                
+                <button type="button"
+                    class="btn btn-secondary btn-sm">
+                    
+                    A zona de Entrega
+                </button>
             </div>
-        </div>
     `
-    return card
+    divCard.innerHTML = card;
+
+    return divCard
 }
 
+// Formatea una fecha a la forma dd/mm/yyyy
 export const formatDate = (currentDate) =>
 {
     let month = currentDate.getMonth() + 1
