@@ -3,6 +3,7 @@ import { Elemento } from "../clases/Elemento.js"
 import { clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
 import { mecanicoUnico } from "../clases/Mecanico.js"
+import { servicios } from "../clases/Servicio.js"
 
 export const tickets = [] // Listado de Tickets del Taller
 let numero = 1 // Número de Tickets
@@ -10,7 +11,9 @@ let numero = 1 // Número de Tickets
 export function listarTickets()
 {
     divContainer.innerHTML = ``
-    divTitles.innerHTML = htmlTitleList()
+    divTitles.innerHTML = ``
+    //divTitles.innerHTML = htmlTitleList()
+    htmlTitleList()
     if (tickets.length > 0)
         listar()
     else
@@ -29,127 +32,201 @@ export function listarTickets()
 // Crea el titulo
 function htmlTitleList()
 {
-    let title = `<h3>Tickets</h3>`
-    title += `<p class="lead">Listado de Tickets en el Taller</p>`
-    return title
+    const h3 = document.createElement('h3')
+    h3.textContent = "Tickets"
+    divTitles.appendChild(h3)
+    const p = document.createElement('p')
+    p.classList.add('lead')
+    p.textContent = "Listado de Tickets en el Taller"
+    divTitles.appendChild(p)
 }
 
-// escribe el listado de tickets (si es que hay un listado que mostrar)
 function listar()
 {
-    // Acá debería de crear el modal que usaría para mostrar la card con el lilstado de servicios y productos
-    // https://getbootstrap.com/docs/5.2/components/modal/#content
-    // de esa rul sacar el modal y el ejemplo
+    crearHtmlModal() // Crea la ventana "#modal-Card" en el DOM
+    crearTicketsDOM()
+}
 
-    divContainer.innerHTML = htmlModal()
+function crearHtmlModal()
+{
+    divContainer.innerHTML = 
+    `
+    <div class="modal fade" id="modal-Card" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel
+                        aria-labelledby="exampleModalLabel" 
+                        aria-hidden="true">
+                        
+                        Ventana de proceso
+                    </h5>
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+            
+                </div>
+          
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                        
+                        Cancelar
+                    </button>
+                    
+                    <button type="button" class="btn btn-primary">
+                        
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+`
+}
 
+function crearTicketsDOM()
+{
     const divCardBody = document.createElement('div')
     divCardBody.classList.add('card-body')
     divCardBody.classList.add('row')
     divCardBody.setAttribute('id', 'divTickets')
 
-    tickets.forEach((e) => {
-        let divCard = htmlCard(e)
-
+    
+    
+    
+    tickets.forEach(ticket =>
+    {        
+        let divCard = crearCardDOM(ticket)
+        // dar funcionalidad a los botones
+        // btn-primary: Procesar ticket
         divCard.querySelector('.card-footer .btn-primary').addEventListener('click', () =>
         {
-            // Mostrar el Modal con los datos básicos del ticket y los servicios y los productos
-            const divModalBody = divContainer.querySelector('.modal-body')
-            divModalBody.innerHTML = `<p>Ticket Num: ${e.numero}</p>`
-        })
+            btnProcesarTicket(ticket)
+        });
+
+        // btn-secondary: A zona de Entrega
         divCard.querySelector('.card-footer .btn-secondary').addEventListener('click', () =>
         {
-            // A zona de Entrega
-            const tListos = JSON.parse(localStorage.getItem('tParseados'))
-            let indice = tListos.findIndex(x => x.numero == e.numero)
-            if (indice == -1)
-            {
-                // No existe, entonces lo agregamos
-                let elementoQueRetira = { numero: e.numero }
-                tListos.push(elementoQueRetira)
-                localStorage.setItem('tParseados', JSON.stringify(tListos))
-            }
-        })
-        divCardBody.appendChild(divCard);
-    });  
+            btnZonaDeEntrega(ticket)
+            
+            Toastify({
+                text: "Elemento listo para entrega...",
+                duration: 3000,
+                gravity: "bottom",
+                }).showToast();
+
+        });
+
+        divCardBody.appendChild(divCard); // al DOM
+    });
     divContainer.appendChild(divCardBody);
 }
 
-// crea el modal que mostrará el ticket para su proceso
-function htmlModal()
-{
-    let html =
-    `
-        <!-- ===== modal-Card ===== -->
-        <div class="modal fade" id="modal-Card" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel  aria-labelledby="exampleModalLabel" aria-hidden="true">Trabajando sobre el elemento</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                
-                    </div>
-              
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="btGuardarProceso">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ===== Modal ===== -->
-    `
-    return html
-}
-
-// Crea una Card para mostrar el Ticket seleccionado en ella
-function htmlCard(e)
+function crearCardDOM(ticket)
 {
     const divCard = document.createElement('div')
     divCard.classList.add('card')
-    divCard.setAttribute('id', `t${e.numero}`)
+    divCard.setAttribute('id', `t${ticket.numero}`)
     divCard.setAttribute('style', 'width:18rem; padding:0px; margin:3px')
-    
-    const card =
-    `
-            <div class="card-header">
-                <div class="d-flex justify-content-between">
-                    <div class="p-2"><small>Num: ${e.numero}</small></div>
-                    <div class="p-2"><small>${ formatDate(e.fecha)}</small></div>
-                </div>
-            </div>
-            
-            <div class="card-body"">    
-                <h5 class="card-title">Ticket de Taller</h5>
-                <p class="card-text">Pedido del Cliente: ${e.problema}</p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Elemento: ${e.elemento.nombre}</li>
-                    <li class="list-group-item">Cliente: ${e.cliente?.mostrarNombres() || "Cliente no cargado"}</li>
-                    <li class="list-group-item">Mecánico: ${e.mecanico.mostrarNombres()}</li>
-                </ul>
-            </div>
-            
-            <div class="card-footer">
-                <button type="button"
-                    class="btn btn-primary btn-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modal-Card">
 
-                    Procesar ticket
-                </button>
+    const htmlCard=
+    `
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div class="p-2"><small>Num: ${ticket.numero}</small></div>
+                <div class="p-2"><small>${ formatDate(ticket.fecha)}</small></div>
+            </div>
+        </div>
+        
+        <div class="card-body"">    
+            <h5 class="card-title">Ticket de Taller</h5>
+            <p class="card-text">Pedido del Cliente: ${ticket.problema}</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Elemento: ${ticket.elemento.nombre}</li>
+                <li class="list-group-item">Cliente: ${ticket.cliente?.mostrarNombres() || "Cliente no cargado"}</li>
+                <li class="list-group-item">Mecánico: ${ticket.mecanico.mostrarNombres()}</li>
+            </ul>
+        </div>
+        
+        <div class="card-footer">
+            <button type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#modal-Card">
+
+                Procesar ticket
+            </button>
+            
+            <button type="button"
+                class="btn btn-secondary btn-sm">
                 
-                <button type="button"
-                    class="btn btn-secondary btn-sm">
-                    
-                    A zona de Entrega
-                </button>
-            </div>
+                A zona de Entrega
+            </button>
+        </div>
     `
-    divCard.innerHTML = card;
-
+    divCard.innerHTML = htmlCard
     return divCard
+}
+
+function btnProcesarTicket(ticket)
+{
+    let accTotal = 0
+
+    let html = `<p><strong>Ticket Num:</strong> ${ticket.numero}</p>`
+    html += `<p><strong>Elemento:</strong> ${ticket.elemento.nombre}</p>`
+    html += `<p class="text-decoration-underline"><strong>Servicios a aplicar:</strong></p>`
+    divContainer.querySelector('.modal-body').innerHTML = html
+
+    servicios.forEach((s, i) =>
+    {
+        const divFormCheck = document.createElement('div')
+        divFormCheck.classList.add('form-check')
+        
+        divFormCheck.innerHTML =
+        `
+            <input class="form-check-input" type="checkbox" id="chk-${s.id}" value="${s.id}"
+                name="servicio" data-precio="${s.precio}">
+
+            <label class="form-check-label" for="chk-${s.id}">
+                ${s.nombre} - $ ${s.precio}
+            </label>
+        `
+        divContainer.querySelector('.modal-body').appendChild(divFormCheck)
+    })
+    html = `<p class="text-end">Total: $ <span class="totalProceso">0</span></p>`
+    divContainer.querySelector('.modal-body').innerHTML += html
+
+    const arr = document.querySelectorAll('.form-check-input')
+    arr.forEach(element => {
+       element.addEventListener('click', (e) =>
+       {
+            let checkbox = e.target
+            let precio = parseInt(checkbox.getAttribute('data-precio'))
+
+            if (checkbox.checked)
+                accTotal += precio
+            else
+                accTotal-= precio
+               
+            document.querySelector('.totalProceso').textContent = accTotal
+       });
+    })
+}
+
+function btnZonaDeEntrega(ticket)
+{
+    const tListos = JSON.parse(localStorage.getItem('tParseados'))
+    let indice = tListos.findIndex(x => x.numero == ticket.numero)
+    if (indice == -1)
+    {
+        // No existe, entonces lo agregamos
+        let elementoQueRetira = { numero: ticket.numero }
+        tListos.push(elementoQueRetira) 
+        localStorage.setItem('tParseados', JSON.stringify(tListos))
+    }
 }
 
 // Formatea una fecha a la forma dd/mm/yyyy

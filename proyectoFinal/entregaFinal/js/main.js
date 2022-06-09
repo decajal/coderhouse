@@ -178,6 +178,12 @@ btConfirmar.addEventListener('click', () =>
         localStorage.setItem('tParseados', JSON.stringify(arr))
         if (panelTickets == true)
             listarTickets()
+        
+        Swal.fire(
+            'Good job!',
+            'You clicked the button!',
+            'success'
+            )
     }
 })
 
