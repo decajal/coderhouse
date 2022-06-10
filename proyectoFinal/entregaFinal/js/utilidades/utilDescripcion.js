@@ -32,7 +32,6 @@ function descripcion()
         <ul>
             <li>Un mecánico único</li>
             <li>Clientes habituales (listado)</li>
-            <li>Repuestos (productos) que se pueden utilizar en el mantenimiento o reparación</li>
             <li>Servicios (listado)</li>
         </ul>
         Cada vez que un elemento ingresa se registra la llegada y se crea un ticket, se detalla el problema a solicitar, lo que sería la "solicitud del cliente"

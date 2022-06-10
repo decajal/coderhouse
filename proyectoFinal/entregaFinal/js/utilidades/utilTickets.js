@@ -175,7 +175,7 @@ function crearCardDOM(ticket)
 function btnProcesarTicket(ticket)
 {
     let accTotal = ticket.getTotalPrice() // acumulador para el precio de los servicios en la Card
-    let arrServicios = [] // arreglo de Servicios, los seleccionados en el checkbox
+    let arrServicios = ticket.getServices() // arreglo de Servicios, los seleccionados en el checkbox
 
     let html = `<p><strong>Ticket Num:</strong> ${ticket.numero}</p>`
     html += `<p><strong>Elemento:</strong> ${ticket.elemento.nombre}</p>`
