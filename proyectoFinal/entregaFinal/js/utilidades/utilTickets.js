@@ -47,6 +47,8 @@ function listar()
     crearTicketsDOM()
 }
 
+// Modal: Ventana de Proceso
+// En esta ventana se muestra el listado de servicios a aplicar en un ticket
 function crearHtmlModal()
 {
     divContainer.innerHTML = 
@@ -70,15 +72,10 @@ function crearHtmlModal()
                 </div>
           
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
+                    <button type="button" class="btn btn-primary"
                         data-bs-dismiss="modal">
                         
-                        Cancelar
-                    </button>
-                    
-                    <button type="button" class="btn btn-primary">
-                        
-                        Guardar
+                        Listo
                     </button>
                 </div>
             </div>
@@ -87,15 +84,13 @@ function crearHtmlModal()
 `
 }
 
+// Recorre el listado de Tickets y crea uno a uno en el DOM y le da funcionalidad a los botones de la card
 function crearTicketsDOM()
 {
     const divCardBody = document.createElement('div')
     divCardBody.classList.add('card-body')
     divCardBody.classList.add('row')
-    divCardBody.setAttribute('id', 'divTickets')
-
-    
-    
+    divCardBody.setAttribute('id', 'divTickets')   
     
     tickets.forEach(ticket =>
     {        
@@ -111,13 +106,6 @@ function crearTicketsDOM()
         divCard.querySelector('.card-footer .btn-secondary').addEventListener('click', () =>
         {
             btnZonaDeEntrega(ticket)
-            
-            Toastify({
-                text: "Elemento listo para entrega...",
-                duration: 3000,
-                gravity: "bottom",
-                }).showToast();
-
         });
 
         divCardBody.appendChild(divCard); // al DOM
@@ -125,6 +113,7 @@ function crearTicketsDOM()
     divContainer.appendChild(divCardBody);
 }
 
+// Crea una Card y muestra el ticket en el DOM
 function crearCardDOM(ticket)
 {
     const divCard = document.createElement('div')
@@ -143,12 +132,24 @@ function crearCardDOM(ticket)
         
         <div class="card-body"">    
             <h5 class="card-title">Ticket de Taller</h5>
-            <p class="card-text">Pedido del Cliente: ${ticket.problema}</p>
+            <p class="card-text">
+                <span class="fw-light">Pedido del Cliente:</span> ${ticket.problema}
+            </p>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Elemento: ${ticket.elemento.nombre}</li>
-                <li class="list-group-item">Cliente: ${ticket.cliente?.mostrarNombres() || "Cliente no cargado"}</li>
-                <li class="list-group-item">Mecánico: ${ticket.mecanico.mostrarNombres()}</li>
+                <li class="list-group-item">
+                    <span class="fw-light">Elemento:</span> ${ticket.elemento.nombre}
+                </li>
+                <li class="list-group-item">
+                    <span class="fw-light">Cliente:</span> ${ticket.cliente?.mostrarNombres() || "Cliente no cargado"}
+                </li>
+                <li class="list-group-item">
+                    <span class="fw-light">Mecánico:</span> ${ticket.mecanico.mostrarNombres()}
+                </li>
             </ul>
+            <p class="card-text text-end">
+                <span class="fw-light">Total: $ </span>
+                <span class="totalProceso">${ticket.getTotalPrice()}</span>
+            </p>
         </div>
         
         <div class="card-footer">
@@ -159,7 +160,6 @@ function crearCardDOM(ticket)
 
                 Procesar ticket
             </button>
-            
             <button type="button"
                 class="btn btn-secondary btn-sm">
                 
@@ -171,47 +171,69 @@ function crearCardDOM(ticket)
     return divCard
 }
 
+// Funcionalidad del botón "Procesar ticket" de la Card
 function btnProcesarTicket(ticket)
 {
-    let accTotal = 0
+    let accTotal = ticket.getTotalPrice() // acumulador para el precio de los servicios en la Card
+    let arrServicios = [] // arreglo de Servicios, los seleccionados en el checkbox
 
     let html = `<p><strong>Ticket Num:</strong> ${ticket.numero}</p>`
     html += `<p><strong>Elemento:</strong> ${ticket.elemento.nombre}</p>`
     html += `<p class="text-decoration-underline"><strong>Servicios a aplicar:</strong></p>`
-    divContainer.querySelector('.modal-body').innerHTML = html
-
-    servicios.forEach((s, i) =>
+    const divModalBody = divContainer.querySelector('.modal-body')
+    divModalBody.innerHTML = html
+    const serviciosTicket = ticket.getServices()
+    servicios.forEach((s) =>
     {
+        
+        const index = serviciosTicket.findIndex(x => x.id == s.id)
+        let checked = (index != -1) ? "checked" : ""
         const divFormCheck = document.createElement('div')
         divFormCheck.classList.add('form-check')
         
         divFormCheck.innerHTML =
         `
             <input class="form-check-input" type="checkbox" id="chk-${s.id}" value="${s.id}"
-                name="servicio" data-precio="${s.precio}">
+                name="servicio" data-precio="${s.precio}" ${checked}>
 
             <label class="form-check-label" for="chk-${s.id}">
                 ${s.nombre} - $ ${s.precio}
             </label>
         `
-        divContainer.querySelector('.modal-body').appendChild(divFormCheck)
+        divModalBody.appendChild(divFormCheck)
     })
-    html = `<p class="text-end">Total: $ <span class="totalProceso">0</span></p>`
-    divContainer.querySelector('.modal-body').innerHTML += html
+    html = `<p class="text-end">Total: $ <span class="totalProceso">${accTotal}</span></p>`
+    divModalBody.innerHTML += html
 
     const arr = document.querySelectorAll('.form-check-input')
     arr.forEach(element => {
        element.addEventListener('click', (e) =>
        {
+            // colocando el precio de los servicios seleccionados al final del ticket
             let checkbox = e.target
-            let precio = parseInt(checkbox.getAttribute('data-precio'))
+            let precio = parseInt(checkbox.getAttribute('data-precio')) // convierte el precio en un INT
 
+            // buscar el servicio en el arreglo de servicios
+            const idServicio = parseInt(checkbox.getAttribute('value'))
+            const servActual = servicios.find(x => x.id == idServicio)
             if (checkbox.checked)
+            {
+                // agrega el servicio seleccionado al arreglo de servicios seleccionados
+                arrServicios.push(servActual)
+                // suma al acumulador, de precio (total) del ticket, el precio del servicio seleccionado
                 accTotal += precio
+            }
             else
+            {
+                // quita el servicio seleccionado del arreglo de servicios seleccionados
+                const index = arrServicios.findIndex(x => x.id == idServicio)
+                arrServicios.splice(index, 1)
+                // resta del acumulador, de precio (total) del ticket, el precio del servicio seleccionado
                 accTotal-= precio
-               
-            document.querySelector('.totalProceso').textContent = accTotal
+            }               
+            ticket.addServices(arrServicios)
+            divModalBody.querySelector('.totalProceso').textContent = accTotal
+            divContainer.querySelector(`#t${ticket.numero} .totalProceso`).textContent = accTotal
        });
     })
 }
@@ -226,6 +248,12 @@ function btnZonaDeEntrega(ticket)
         let elementoQueRetira = { numero: ticket.numero }
         tListos.push(elementoQueRetira) 
         localStorage.setItem('tParseados', JSON.stringify(tListos))
+
+        Toastify({
+            text: "Elemento listo para entrega...",
+            duration: 3000,
+            gravity: "bottom",
+            }).showToast();
     }
 }
 
@@ -237,6 +265,7 @@ export const formatDate = (currentDate) =>
     return (day < 10 ? `0${day}` : day) + "-" + (month < 10 ? `0${month}` : month) + "-" + currentDate.getFullYear()
 }
 
+// ============================================================================================================
 //===================== Formulario de Ingreso
 export function crearFormulario()
 {
@@ -277,7 +306,11 @@ function crear()
         registrarTicket(iProblema, fechaIngreso)
     
         form.reset()
-        crearAlerta('Nuevo ticket generado', 'success')
+        Toastify({
+            text: "Se registró el ingreso al taller",
+            duration: 3000,
+            gravity: "bottom",
+            }).showToast();
     })
 }
 

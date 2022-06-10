@@ -11,12 +11,17 @@ export class Ticket {
         this.servicios = []
     }
 
-    agregarServicio(servicio)
+    addServices(servicios)
     {
-        this.servicios.push(servicio)
+        this.servicios = servicios
+    }
+
+    getServices()
+    {
+        return this.servicios
     }
     
-    precioTotal()
+    getTotalPrice()
     {
         let total = 0
         this.servicios.forEach(element => {

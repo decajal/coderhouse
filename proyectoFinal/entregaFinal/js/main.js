@@ -2,7 +2,7 @@
     Curso Coderhouse Back-End - Personal de Teco
     Nombre: Diego Cajal (decajalperez@teco.com.ar)
     Proyecto Final - Entrega Final
-    Fecha 08/06/2022
+    Fecha 09/06/2022
     Descripción: Una parte de un sistema existente, la parte de taller.
         Se tiene el ingreso de elementos que son para su mantenimiento/reparación en un taller.
         Se cuenta con lo siguiente
@@ -28,7 +28,6 @@ export const divContainer = document.getElementById('divContainer')
 let panelTickets = false // Para saber si me encuentro parado en el listado de Tickets, si es true debe actualizar esa página
 export let tParseados = [] // Arreglo usado en el localStorage, los tickets parseados para retirar
 controlLS()
-
 
 const taller = document.getElementById('taller')
 taller.addEventListener('click', (e) =>
@@ -119,11 +118,13 @@ export function crearMensaje(html, tipo)
 }
 
 // variable usada en la ventana modal
-let modalBody = document.getElementsByClassName('modal-body')[0]
-// Botón "Salida" que tiene los Tickets de los elementos que están retirando del Taller
+//let modalBody = document.getElementsByClassName('modal-body')[0]
+const modalBody = document.querySelector('#modalCarrito .modal-body')
+// Botón "Zona de Entrega" que tiene los Tickets de los elementos que están retirando del Taller
 //  Es para quitarlos del Carrito.
 document.getElementById('btSalida').addEventListener('click', () => 
 {
+    let totalCarrito = 0
     const arregloLocalStorage = JSON.parse(localStorage.getItem('tParseados'))
     modalBody.innerHTML = ""
     if (arregloLocalStorage.lenght != 0)
@@ -135,30 +136,52 @@ document.getElementById('btSalida').addEventListener('click', () =>
             if (typeof ticketLS != 'undefined')
             {
                 let elemento = {numero: ticketLS.numero}
+                const totalTicket = ticketLS.getTotalPrice()
                 ticketsEfectivo.push(elemento)
+                totalCarrito += totalTicket
                 modalBody.innerHTML +=
                 `
                 <div class="card" id="modal-${ticketLS.numero}" style="width: 18rem; margin-top:5px;">
                     <div class="card-body"">    
                         <h5 class="card-title">Ticket Num: ${ticketLS.numero}</h5>
-                        <p class="card-text">Cliente: ${ticketLS.cliente?.mostrarNombres() || "Cliente no cargado"}</p>
-                        <p class="card-text">Notas del Mecánico: [Ninguna]</p>
+                        <p class="card-text">
+                            <span class="fw-light">Cliente: </span>
+                            ${ticketLS.cliente?.mostrarNombres() || "Cliente no cargado"}
+                        </p>
+                        <p class="card-text">
+                            <span class="fw-light">Elemento: </span>${ticketLS.elemento.nombre}
+                        </p>
+                        <p class="card-text text-end">
+                            <span class="fw-light">Total-ticket: $ </span>
+                            <span class="totalTicket">${totalTicket}</span>
+                        </p>
                         <button class="btn btn-danger">Quitar</button>
                     </div>
                 </div>
                 `
             }
         });
+        modalBody.innerHTML += 
+        `
+        <p class="text-end">
+            <span class="fw-light">Total: $</span><span class="totalCarrito">0</span>
+        </p>
+        `
         ticketsEfectivo.forEach(eC => 
         {
             document.getElementById(`modal-${eC.numero}`).lastElementChild.lastElementChild.addEventListener('click', () => 
             {
+                const ticket = tickets.find(x => x.numero == eC.numero)
+                const totalTicket = ticket.getTotalPrice()
+                totalCarrito -= totalTicket
+
                 document.getElementById(`modal-${eC.numero}`).remove()
-                //let index = arregloLocalStorage.findIndex(x => x.numero == eC.numero)
                 ticketsEfectivo.splice(eC.index, 1)
                 localStorage.setItem('tParseados', JSON.stringify(ticketsEfectivo))
+                modalBody.querySelector('.totalCarrito').textContent = totalCarrito
             })
         })
+        modalBody.querySelector('.totalCarrito').textContent = totalCarrito
     }
 })
 
@@ -181,7 +204,7 @@ btConfirmar.addEventListener('click', () =>
         
         Swal.fire(
             'Good job!',
-            'You clicked the button!',
+            'Se registró el pago exitosamente.',
             'success'
             )
     }
@@ -223,3 +246,6 @@ function blanquearLS()
     const arr = []
     localStorage.setItem('tParseados', JSON.stringify(arr))
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    mostrarDescripcion()});
