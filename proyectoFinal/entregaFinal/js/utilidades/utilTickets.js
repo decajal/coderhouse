@@ -177,9 +177,9 @@ function btnProcesarTicket(ticket)
     let accTotal = ticket.getTotalPrice() // acumulador para el precio de los servicios en la Card
     let arrServicios = ticket.getServices() // arreglo de Servicios, los seleccionados en el checkbox
 
-    let html = `<p><strong>Ticket Num:</strong> ${ticket.numero}</p>`
-    html += `<p><strong>Elemento:</strong> ${ticket.elemento.nombre}</p>`
-    html += `<p class="text-decoration-underline"><strong>Servicios a aplicar:</strong></p>`
+    let html = `<p><span class="fw-light">Ticket Num:</span> ${ticket.numero}</p>`
+    html += `<p><span class="fw-light">Elemento:</span> ${ticket.elemento.nombre}</p>`
+    html += `<p class="text-decoration-underline"><span class="fw-light">Servicios a aplicar:</span></p>`
     const divModalBody = divContainer.querySelector('.modal-body')
     divModalBody.innerHTML = html
     const serviciosTicket = ticket.getServices()
@@ -266,7 +266,7 @@ export const formatDate = (currentDate) =>
 }
 
 // ============================================================================================================
-//===================== Formulario de Ingreso
+// ===================== Formulario de Ingreso
 export function crearFormulario()
 {
     divTitles.innerHTML = htmlTitleForm()

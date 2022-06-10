@@ -26,17 +26,18 @@ function descripcion()
         </figcaption>
     </figure>
     <p><strong>Descripción: </strong>
-        Se plantea el módulo de Taller de un sistema en producción, el cual cuenta con módulos adicionales.<br>
+        Módulo de Taller de un sistema en producción (el sistema original cuenta con módulos adicionales que para el caso no se modelan)<br>
         Se plantea el ingreso de elementos que son para su mantenimiento/reparación en el taller.<br>
         Se cuenta con lo siguiente:
         <ul>
-            <li>Un mecánico único</li>
+            <li>Formulario de Ingreso, el cual registra un ticket</li>
             <li>Clientes habituales (listado)</li>
-            <li>Servicios (listado)</li>
+            <li>Servicios (listado) que brinda el taller</li>
+            <li>Un mecánico único</li>
         </ul>
         Cada vez que un elemento ingresa se registra la llegada y se crea un ticket, se detalla el problema a solicitar, lo que sería la "solicitud del cliente"
     </p>
-    <p>En el <cite>"Home"</cite> de la aplicación se agregó: Mini weatherApp que consulta el clima en la/s ciudades seleccionadas </p>
+    <p>En el <cite>"Home"</cite> de la aplicación se agregó: Mini weatherApp que consulta el clima en la/s ciudades seleccionadas y las registra en el Local Storage</p>
     `
     divContainer.innerHTML = html;
 }

@@ -202,8 +202,8 @@ btConfirmar.addEventListener('click', () =>
             listarTickets()
         
         Swal.fire(
-            'Good job!',
-            'Se registró el pago exitosamente.',
+            'Good job!', // <-- Me gustó el título como final ! por eso lo dejé xD
+            'El pago se registró exitosamente.',
             'success'
             )
     }
