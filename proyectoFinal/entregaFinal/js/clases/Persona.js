@@ -11,6 +11,6 @@ export class Persona
 
     mostrarNombres()
     {
-        return `${this.apellido}, ${this.nombre}`
+        return `${this.apellido} ${this.nombre}`
     }
 }

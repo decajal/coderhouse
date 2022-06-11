@@ -1,12 +1,16 @@
 import { crearAlerta, crearMensaje, divContainer, divTitles } from "../main.js"
 import { Elemento } from "../clases/Elemento.js"
-import { clientes } from "../clases/Cliente.js"
+import { Cliente, clientes } from "../clases/Cliente.js"
 import { Ticket } from "../clases/Ticket.js"
 import { mecanicoUnico } from "../clases/Mecanico.js"
 import { servicios } from "../clases/Servicio.js"
 
 export const tickets = [] // Listado de Tickets del Taller
 let numero = 1 // Número de Tickets
+
+let cliente // cliente habitual
+let elemento // elemento que ingresa al taller para su reapración
+
 
 export function listarTickets()
 {
@@ -140,7 +144,7 @@ function crearCardDOM(ticket)
                     <span class="fw-light">Elemento:</span> ${ticket.elemento.nombre}
                 </li>
                 <li class="list-group-item">
-                    <span class="fw-light">Cliente:</span> ${ticket.cliente?.mostrarNombres() || "Cliente no cargado"}
+                    <span class="fw-light">Cliente:</span> ${ticket.cliente?.mostrarNombres() || noCliente}
                 </li>
                 <li class="list-group-item">
                     <span class="fw-light">Mecánico:</span> ${ticket.mecanico.mostrarNombres()}
@@ -300,7 +304,7 @@ function crear()
         }
 
         registrarElemento(iElemento)
-        cliente = buscarCliente(iCliente)
+        //cliente = buscarCliente(iCliente)
     
         let fechaIngreso = new Date()
         registrarTicket(iProblema, fechaIngreso)
@@ -335,7 +339,7 @@ function htmlForm()
                     aria-label="Ingrese el elemento que necesita reparar" name="ingresoElemento">
             </div>
             <div class="mb-3">
-                <label class="form-label" for="cliente">Cliente</label>
+                <label class="form-label" for="cliente">Cliente (si es habitual ingrese el DNI si no ingrese apellido y nombre)</label>
                 <input id="cliente" class="form-control" type="text" placeholder="Ingrese el cliente"
                     aria-label="Ingrese el cliente" name="ingresoCliente">
             </div>
@@ -355,26 +359,52 @@ function htmlForm()
 // Valida ingreso de los datos al formulario
 function validarIngreso(iElemento, iCliente, iProblema)
 {
+    
     let html = ""
     html += iElemento.length == 0 ? "<p>No ingresó ningún elemento.</p>" : ""
-    html += iCliente.length == 0 ? "<p>No ingresó ningún cliente</p>" : ""
+
+    //html += iCliente.length == 0 ? "<p>No ingresó ningún cliente</p>" : ""
+    if (iCliente.length == 0)
+        html += "<p>No ingresó ningún cliente</p>"
+    else
+    {
+        const dni = validarEntero(iCliente)
+        if (dni != "")
+            cliente = buscarCliente(dni)        
+        else
+        {
+            cliente = new Cliente(0, iCliente + " (No Habitual)", "", 0, 0)
+        }
+    }
     html += iProblema.length == 0 ? "<p>No ingresó la descripción del problema. Esto es importante ya que el mecánico la utilizará para su resolución.</p>" : ""
     return html
 }
 
+function validarEntero(valor){
+    //intento convertir a entero.
+   //si era un entero no le afecta, si no lo era lo intenta convertir
+   valor = parseInt(valor)
+
+    //Compruebo si es un valor numérico
+    if (isNaN(valor))
+          //entonces (no es numero) devuelvo el valor cadena vacia
+          return ""
+    else
+          //En caso contrario (Si era un número) devuelvo el valor
+          return valor
+}
+
 // crea la Clase Elemento según el ingresado por Formulario
-let elemento
 function registrarElemento(iElemento)
 {
     elemento = new Elemento(iElemento)
 }
 
 // Busca el cliente en el arreglo de clientes
-// parametro: nombre
-let cliente
-function buscarCliente(iCliente)
+// parametro: dni
+function buscarCliente(dni)
 {
-    return cliente = clientes.find(x => x.nombre == iCliente)
+    return cliente = clientes.find(x => x.dni == dni)
 }
 
 // registra el ticket con la información proporcionada
