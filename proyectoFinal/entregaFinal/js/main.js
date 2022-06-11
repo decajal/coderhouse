@@ -92,10 +92,12 @@ export function crearAlerta(html, tipo)
           '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
           '</div>'
         ].join('')  
+        
         divAlert.append(wrapper)
     }
-    divMensaje.appendChild(divAlert)
-    alert(html, tipo)
+    alert (html, tipo)
+    //document.querySelector('#divMensaje').appendChild(divAlert)
+    return divAlert
 }
 
 // Crea un msjs y lo muestra (sin botón de cierre)

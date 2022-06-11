@@ -283,7 +283,7 @@ export function crearFormulario()
 function crear()
 {
     divContainer.innerHTML = htmlForm()
-
+    const divMensaje = document.querySelector('#divMensaje')
     let form = document.getElementById('formIngreso')
     form.addEventListener('submit', (e) => 
     {
@@ -297,16 +297,13 @@ function crear()
         iProblema = dataForm.get('problema')
     
         const html = validarIngreso(iElemento, iCliente, iProblema)
-        const divMensaje = document.getElementById('divMensaje')
         divMensaje.innerHTML = ""
         if (html.length != 0) {
-            crearAlerta(html, 'danger')
-
+            const divAlert = crearAlerta(html, 'danger')
+            divMensaje.appendChild(divAlert)
             return    
         }
-
         registrarElemento(iElemento)
-        //cliente = buscarCliente(iCliente)
     
         let fechaIngreso = new Date()
         registrarTicket(iProblema, fechaIngreso)
