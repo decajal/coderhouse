@@ -36,10 +36,15 @@ function descripcion()
             <li>Un mecánico único</li>
         </ul>
         Cada vez que un elemento ingresa se registra la llegada y se crea un ticket, se detalla el problema a solicitar, lo que sería la "solicitud del cliente"<br>
-        En el formulario de ingrerso al ingresar el nombre del cliente el sistema busca por nombre dentro del arreglo de clientes y si lo encuentra lo asocia al ticket,
-        si no lo encuentra le coloca la leyenda <cite>Cliente no cargado</cite>.<br>
+        En el formulario de ingrerso se pide el DNI del cliente habitual y el sistema busca en si lista de clientes habituales y si lo encuentra lo asocia al ticket,
+        si no lo encuentra informa de esta situación. Si el cliente no es habitual, podemos ingresar nombre y apellido (por convención se recomienda que el orden sea Apellido y Nombre)
+        y el sistema creará un objeto temporal con estos datos y le coloca la leyenda <cite>Cliente no habitual</cite>, finalmente lo asocia al ticket.<br>
+    </p>
+    <p>
         El listado de tickets se puede consultar en la opción de <cite>Tickets</cite> del menú superior de la página.<br>
         A cada ticket se le puede aplicar un proceso; consiste en seleccionar uno (o más) servicios que el taller proporciona. Los mismos se agregan al ticket y suman el importe del servicio seleccionado.<br>
+    </p>
+    <p>
         El sistema es capaz de mostrar los importes individuales de cada ticket (procesado o no) y en la <cite>Zona de Entrega</cite> (con una funcionalidad parecida a la de un carrito de compras)
         el total de los tickets de salida, el importe total a abonar por un cliente que retirar uno o varios elementos que se encontraban en el taller.
     </p>

@@ -16,7 +16,6 @@ export function listarTickets()
 {
     divContainer.innerHTML = ``
     divTitles.innerHTML = ``
-    //divTitles.innerHTML = htmlTitleList()
     htmlTitleList()
     if (tickets.length > 0)
         listar()
@@ -27,8 +26,8 @@ export function listarTickets()
             const arr = []
             localStorage.setItem('tParseados', JSON.stringify(arr))
         }
-        divContainer.innerHTML += `<div id="divMensaje" style="margin-top:10px;"></div>`
-        crearMensaje('Actualmente no hay tickets cargados. Gracias', 'primary')
+        const divMensaje = crearMensaje('Actualmente no hay tickets cargados. Gracias', 'primary')
+        divContainer.appendChild(divMensaje)
     }
         
 }
@@ -182,7 +181,8 @@ function btnProcesarTicket(ticket)
     let arrServicios = ticket.getServices() // arreglo de Servicios, los seleccionados en el checkbox
 
     let html = `<p><span class="fw-light">Ticket Num:</span> ${ticket.numero}</p>`
-    html += `<p><span class="fw-light">Elemento:</span> ${ticket.elemento.nombre}</p>`
+    html += `<p><span class="fw-light">Elemento:</span> ${ticket.elemento.nombre}<br>`
+    html += `<span class="fw-light">Cliente:</span> ${ticket.cliente.mostrarNombres()}</p>`
     html += `<p class="text-decoration-underline"><span class="fw-light">Servicios a aplicar:</span></p>`
     const divModalBody = divContainer.querySelector('.modal-body')
     divModalBody.innerHTML = html
@@ -244,6 +244,8 @@ function btnProcesarTicket(ticket)
 
 function btnZonaDeEntrega(ticket)
 {
+    document.querySelector('#modalCarrito .btn-primary').removeAttribute('disabled')
+
     const tListos = JSON.parse(localStorage.getItem('tParseados'))
     let indice = tListos.findIndex(x => x.numero == ticket.numero)
     if (indice == -1)
@@ -370,11 +372,13 @@ function validarIngreso(iElemento, iCliente, iProblema)
     {
         const dni = validarEntero(iCliente)
         if (dni != "")
-            cliente = buscarCliente(dni)        
-        else
-        {
-            cliente = new Cliente(0, iCliente + " (No Habitual)", "", 0, 0)
+        {    
+            cliente = buscarCliente(dni)
+            if (typeof cliente === 'undefined')
+                html += "<p>El DNI ingresado no pertenece a un cliente habitual, verifique esa información o ingrese el apellido y nombre.</p>"
         }
+        else
+            cliente = new Cliente(0, iCliente + " (No Habitual)", "", 0, 0)
     }
     html += iProblema.length == 0 ? "<p>No ingresó la descripción del problema. Esto es importante ya que el mecánico la utilizará para su resolución.</p>" : ""
     return html

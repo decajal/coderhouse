@@ -31,7 +31,7 @@ function listar()
 function htmlTitle()
 {
     let html = `<h3>Clientes</h3>`
-    html += `<p class="lead">Listado de personas que con Clientes Habituales de nuestro Taller</p>`
+    html += `<p class="lead">Listado de Clientes Habituales del Taller</p>`
     return html
 }
 

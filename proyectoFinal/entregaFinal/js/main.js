@@ -1,16 +1,8 @@
 /*
     Curso Coderhouse Back-End - Personal de Teco
-    Nombre: Diego Cajal (decajalperez@teco.com.ar)
+    Nombre: Ing. Diego Cajal (decajalperez@teco.com.ar)
     Proyecto Final - Entrega Final
-    Fecha 10/06/2022
-    Descripción: Una parte de un sistema existente, la parte de taller.
-        Se tiene el ingreso de elementos que son para su mantenimiento/reparación en un taller.
-        Se cuenta con lo siguiente
-            + Un sólo mecánico
-            + Clientes habituales (listado)
-            + Servicios (listado)
-        Cada vez que un elemento ingresa se registra la llegada y se crea un ticket, se detallan los servicios aplicados y/o repuestos instalados
-        Una vez finalizada la reparación o mantenimiento se cierra el ticket y el elemento queda listo para ser retirado.
+    Fecha JUN 2022
 */
 
 import { listarTickets, crearFormulario } from "./utilidades/utilTickets.js"
@@ -109,15 +101,20 @@ export function crearAlerta(html, tipo)
 // Crea un msjs y lo muestra (sin botón de cierre)
 export function crearMensaje(html, tipo)
 {
+    const divMensaje = document.createElement('div')
+    divMensaje.setAttribute('id', 'divMensaje')
+    divMensaje.setAttribute('style', 'margin-top:10px;')
+
     const divAlert = document.createElement('div')
     divAlert.setAttribute('class', `alert alert-${tipo}`)
     divAlert.setAttribute('role', 'alert')
     divAlert.innerHTML = html
+    
     divMensaje.appendChild(divAlert)
+    return divMensaje
 }
 
 // variable usada en la ventana modal
-//let modalBody = document.getElementsByClassName('modal-body')[0]
 const modalBody = document.querySelector('#modalCarrito .modal-body')
 // Botón "Zona de Entrega" que tiene los Tickets de los elementos que están retirando del Taller
 //  Es para quitarlos del Carrito.
@@ -126,7 +123,7 @@ document.getElementById('btSalida').addEventListener('click', () =>
     let totalCarrito = 0
     const arregloLocalStorage = JSON.parse(localStorage.getItem('tParseados'))
     modalBody.innerHTML = ""
-    if (arregloLocalStorage.lenght != 0)
+    if (arregloLocalStorage.length > 0)
     {
         const ticketsEfectivo = []
         arregloLocalStorage.forEach(eLS =>
@@ -178,14 +175,33 @@ document.getElementById('btSalida').addEventListener('click', () =>
                 ticketsEfectivo.splice(eC.index, 1)
                 localStorage.setItem('tParseados', JSON.stringify(ticketsEfectivo))
                 modalBody.querySelector('.totalCarrito').textContent = totalCarrito
+
+                
+                if (ticketsEfectivo.length > 0)
+                    modalBody.querySelector('.totalCarrito').textContent = totalCarrito
+                else
+                {
+                    modalBody.querySelector('.text-end').textContent = ""
+                    btConfirmar.setAttribute('disabled', true)
+                    
+                    const divMensaje = crearMensaje('Actualmente no hay tickets en la Zona de Entrega. Gracias', 'primary')
+                    modalBody.appendChild(divMensaje)
+                }            
             })
         })
         modalBody.querySelector('.totalCarrito').textContent = totalCarrito
     }
+    else
+        {
+            btConfirmar.setAttribute('disabled', true)
+            
+            const divMensaje = crearMensaje('Actualmente no hay tickets en la Zona de Entrega. Gracias', 'primary')
+            modalBody.appendChild(divMensaje)
+        }
 })
 
 // Botón confirmar del "Carrito"
-const btConfirmar = document.getElementById('btConfirmar')
+const btConfirmar = document.querySelector('#modalCarrito .btn-primary')
 btConfirmar.addEventListener('click', () =>
 {
     const arregloLocalStorage = JSON.parse(localStorage.getItem('tParseados'))
