@@ -21,17 +21,15 @@ const product =
         price: 789,
         thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
     }
-cont.save(product)
-    .then(data =>
-        {
-            console.log(data);
-        })
-    .catch(err =>
-        {
-             console.log(err);
-        });
-
-
+// cont.save(product)
+//     .then(data =>
+//         {
+//             console.log(data);
+//         })
+//     .catch(err =>
+//         {
+//              console.log(err);
+//         });
 // cont.getAll()
 //     .then(data => 
 //         {
@@ -59,3 +57,13 @@ cont.save(product)
 //         {
 //             console.log(err);
 //         });
+
+cont.delelteAll()
+    .then(data =>
+        {
+            console.log(data);
+        })
+    .catch(err =>
+        {
+             console.log(err);
+        });

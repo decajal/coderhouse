@@ -19,10 +19,8 @@ class Contenedor
             });
             idMax++;
             const newObject = { title: objeto.title, price: objeto.price, thumbnail: objeto.thumbnail, id: idMax }
-            //console.log(newObject);
             data.push(newObject);
             await fs.promises.writeFile(this.nombre, JSON.stringify(data)); // Si funciona !! Preguntar mañana como lo entrego
-            console.log(data);
         }
         catch (error)
         {
@@ -81,9 +79,17 @@ class Contenedor
             return error
         }
     }
-    delelteAll()
+    async delelteAll()
     {
-        // Elimina todos objetos presentes en el archivo
+        try
+        {
+            await fs.promises.writeFile(this.nombre, "");
+            return 'Registros eliminados !!';
+        }
+        catch (error)
+        {
+            return error;
+        }
     }
 
 }
