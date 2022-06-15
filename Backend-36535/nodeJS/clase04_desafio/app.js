@@ -57,7 +57,6 @@ cont.deleteById(5)
         {
             console.log(err);
         });
-
 cont.delelteAll()
     .then(data =>
         {
