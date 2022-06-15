@@ -20,7 +20,9 @@ class Contenedor
             idMax++;
             const newObject = { title: objeto.title, price: objeto.price, thumbnail: objeto.thumbnail, id: idMax }
             data.push(newObject);
-            await fs.promises.writeFile(this.nombre, JSON.stringify(data)); // Si funciona !! Preguntar mañana como lo entrego
+            await fs.promises.writeFile(this.nombre, JSON.stringify(data));
+
+            return idMax;
         }
         catch (error)
         {
@@ -67,8 +69,8 @@ class Contenedor
             {
                 const newData = data.filter(x => x.id !== id);
                 // guardar el archivo
-                const result = await fs.promises.writeFile(this.nombre, JSON.stringify(newData));
-                //console.log(result);
+                await fs.promises.writeFile(this.nombre, JSON.stringify(newData));
+                
                 return 'Registro Eliminado !!';
             }
             else
@@ -84,14 +86,12 @@ class Contenedor
         try
         {
             await fs.promises.writeFile(this.nombre, "");
-            return 'Registros eliminados !!';
         }
         catch (error)
         {
             return error;
         }
     }
-
 }
 
 module.exports = {Contenedor}
