@@ -13,4 +13,4 @@ router.post('/recurso', (req, res) =>
     res.send('post ok');
 })
 
-module.exports=router;
+module.exports = router;
