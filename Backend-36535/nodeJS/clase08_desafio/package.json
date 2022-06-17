@@ -1,0 +1,13 @@
+{
+  "name": "clase08_desafio",
+  "version": "1.0.0",
+  "description": "Clase 08 curso nodeJS Coderhouse, desafio entregable 4",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "author": "Diego Cajal",
+  "license": "MIT"
+}
