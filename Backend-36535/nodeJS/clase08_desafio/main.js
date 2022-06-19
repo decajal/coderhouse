@@ -3,10 +3,10 @@
     decajalperez@teco.com.ar
     Desafío clase 08 - nodeJS
 
-    << API RESTful >>
+    * * API RESTful * *
 
-    Consigna: Realizar un proyecto de servidor basado en nodeJS y express que ofrezca una API RESTful
-        de productos. En detalle, que incorpore las siguientes rutas:
+    * Consigna: Realizar un proyecto de servidor basado en nodeJS y express que ofrezca una API RESTful
+    *    de productos. En detalle, que incorpore las siguientes rutas:
 
         * GET '/api/productos' -> devuelve todos los productos
         * GET '/api/productos/:id' -> devuelve un producto según su id
@@ -43,6 +43,10 @@ const port = 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
+const routerProductos = require('./routes/routeProductos');
+app.use('/api/productos', routerProductos);
 
 
 app.listen(port), () => { console.log(`Escuchando el puerto: ${port}`); }
