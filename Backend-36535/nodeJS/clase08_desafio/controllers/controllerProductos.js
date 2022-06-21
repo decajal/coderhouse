@@ -17,8 +17,10 @@ const buscar = (req, res) =>
     {
         const id = parseInt(req.params.id);
         const productoEncontrado = productos.find(x => x.id === id);
-    
-        res.status(200).json(productoEncontrado);
+        if (productoEncontrado)
+            res.status(200).json(productoEncontrado);
+        else
+            res.status(404).json({error: 'producto no encontrado'});
     }
     catch (error) { res.status(500).json(error.message); }    
 }
