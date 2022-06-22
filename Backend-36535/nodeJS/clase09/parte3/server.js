@@ -13,7 +13,7 @@ app.engine(
 app.set('views', './views'); // especificando el directorio de view
 app.set('view engine', 'hbs');
 
-app.get('/', (req, res) => 
+app.get('/', (req, res) =>
 {
     res.render('datos', {nombre: 'Diego', apellido: 'Cajal'});
 })

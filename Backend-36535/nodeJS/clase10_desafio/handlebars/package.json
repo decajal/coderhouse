@@ -1,0 +1,19 @@
+{
+  "name": "my-app-hbs",
+  "version": "1.0.0",
+  "description": "El uso de plantillas: Handlebars",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  },
+  "keywords": [],
+  "author": "Diego Cajal",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "express-validator": "^6.11.1"
+  }
+}
