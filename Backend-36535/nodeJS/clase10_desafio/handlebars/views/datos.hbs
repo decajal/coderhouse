@@ -1,1 +1,33 @@
 <!-- tengo que mostrar los datos -->
+<div class="container-sm">
+    <h1 class="text-primary">Vista de Productos</h1>
+    <!-- Acá va un: if (hayProductosQueListar) ? mostrarListado : mostrarMensajeDeQueNoHayProductos -->
+
+    {{#if tieneElementos}}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Foto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each productos}}
+                    <tr>
+                        <th scope="row">{{this.id}}</th>
+                        <td>{{this.title}}</td>
+                        <td>{{this.price}}</td>
+                        <td>{{this.thumbnail}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    {{else}}
+        <div class="alert alert-primary" role="alert">
+            No se encontraron productos.
+        </div>
+    {{/if}}
+    <p class="text-end"><a href="/">Ir al formulario de Ingreso de Productos</a></p>
+</div>
