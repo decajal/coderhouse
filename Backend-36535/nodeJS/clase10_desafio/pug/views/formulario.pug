@@ -1,0 +1,36 @@
+html
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet')
+    title Productos
+  body
+    .container-sm
+      h1.text-primary Ingrese Producto
+      form(action='/productos' method='POST')
+        .mb-3
+        label.form-label(for='nombre') Nombre
+        input#nombre.form-control(name='nombre' type='text')
+        .mb-3
+        label.form-label(for='precio') Precio
+        input#precio.form-control(name='precio' type='text')
+        .mb-3
+        label.form-label(for='inputUrl') Foto URL
+        input#inputUrl.form-control(name='url' type='text')
+        .d-flex.justify-content-between
+          .p-2
+              button.btn.btn-primary(type='submit') Enviar
+          .p-2
+              a(href='/productos') Ir al listado de Productos
+      if errors
+        .container-sm
+        each x in errorsArray
+          .alert.alert-warning.alert-dismissible.fade.show(role='alert')
+            strong=x.msg
+            button.btn-close(type='button' data-bs-dismiss='alert' aria-label='close')
+
+  script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js')
+    
+    
