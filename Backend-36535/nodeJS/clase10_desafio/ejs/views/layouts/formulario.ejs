@@ -1,0 +1,38 @@
+<div class="container-sm">
+  <h1 class="text-primary">Ingrese Producto</h1>
+  <form action="/productos" method="POST">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input id="nombre" name="nombre" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input id="precio" name="precio" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="inputUrl" class="form-label">Foto URL</label>
+      <input id="inputUrl" name="url" type="text" class="form-control" />
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="p-2">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      <div class="p-2"><a href="/productos">Ir al listado de Productos</a></div>
+    </div>
+  </form>
+</div>
+<% if (errors) { %>
+<div class="container-sm">
+  <% errorsArray.forEach( (x) => { %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong><%= x.msg %></strong>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="close"
+    ></button>
+  </div>
+  <% }); %>
+</div>
+<% } %>

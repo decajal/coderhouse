@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./layouts/head') %>
+  <body>
+    <!-- prettier-ignore -->
+    <% if (cargarForm) %>
+    <h1>Muestra</h1>
+    <%# include('./layouts/formulario', { errors: errors }) %> <% else %> <%-
+    include('layouts/datos') %>
+  </body>
+</html>
