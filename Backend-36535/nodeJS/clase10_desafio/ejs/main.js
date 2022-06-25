@@ -13,18 +13,14 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) =>
 {
-    // debe cargar el formulario
-    const cargarForm = true;
-    const errors = false;
-    res.render('index', { cargarForm, errors });
+    res.render('index', { cargarForm: true, tieneErrores: false, arregloErrores: [] });
 });
 
 app.get('/productos', (req, res) =>
 {
     // debe cargar los datos
-    const cargarForm = false;
     const tieneElementos = (productos.length > 0) ? true : false;
-    res.render('index', { cargarForm, productos, tieneElementos });
+    res.render('index', { cargarForm: false, tieneElementos, productos });
 });
 
 app.post('/productos',
@@ -40,10 +36,9 @@ app.post('/productos',
     {
         {
             // debe cargar el formulario
-            const cargarForm = true;
             const valores = req.body;
-            const errorsArray = errors.array();
-            return res.render('index', { cargarForm, errorsArray, valores, errors: true });
+            const arregloErrores = errors.array();
+            return res.render('index', { cargarForm: true, tieneErrores: true, arregloErrores });
         }
     }
     const { nombre, precio, url } = req.body;

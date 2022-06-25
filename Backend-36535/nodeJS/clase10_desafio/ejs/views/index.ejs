@@ -3,9 +3,12 @@
   <%- include('./layouts/head') %>
   <body>
     <!-- prettier-ignore -->
-    <% if (cargarForm) %>
-    <h1>Muestra</h1>
-    <%# include('./layouts/formulario', { errors: errors }) %> <% else %> <%-
-    include('layouts/datos') %>
+    <% if (cargarForm) { %>
+      <%- include('./layouts/formulario', { errors: tieneErrores, errorsArray: arregloErrores }) %>
+    <% } else { %>
+      <%- include('./layouts/datos', { elements: tieneElementos, productsArray: productos}) %>
+    <% } %>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

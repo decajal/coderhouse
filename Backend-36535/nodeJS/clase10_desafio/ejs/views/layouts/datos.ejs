@@ -1,6 +1,6 @@
 <div class="container-sm">
   <h1 class="text-primary">Vista de Productos</h1>
-  <% if tieneElementos { %>
+  <% if (elements) { %>
   <table class="table">
     <thead>
       <tr>
@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <% productos.forEach( (p) => { %>
+      <% productsArray.forEach( (p) => { %>
       <tr>
         <th scope="row"><%= p.id %></th>
         <td><%= p.title %></td>
