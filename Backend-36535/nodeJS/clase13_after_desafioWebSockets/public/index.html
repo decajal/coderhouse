@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> After Alumnos </title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+	<h1> Servidor en Socket</h1>
+	
+	<form id="agregarAlumno">
+		<input type="text" id="nombre" placeholder="Ingrese su nombre">
+		<input type="text" id="edad" placeholder="Ingrese su edad">
+		<input type="submit" value="enviar">
+	</form>
+
+	<div id="alumnos"></div>
+
+	<script src="/main.js"></script>
+</body>
+</html>
