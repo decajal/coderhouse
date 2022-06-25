@@ -1,0 +1,13 @@
+{
+  "name": "my-app-websocket",
+  "version": "1.0.0",
+  "description": "webSockets",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Diego Cajal",
+  "license": "ISC"
+}
