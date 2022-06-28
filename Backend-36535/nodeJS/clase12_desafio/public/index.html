@@ -18,21 +18,22 @@
 <body>
     <div class="container-sm d-grid gap-2">
         <h1 class="display-1">Desafio: webSockets</h1>
+        <figcaption class="blockquote-footer">Ing. Diego Cajal (decajalperez@teco.com.ar)</figcaption>
         <div class="p-2 bg-light rounded">
             <p class="display-6 text-primary">Ingreso de Productos</p>
             <p>
                 <form id="formProductos" method="post">
                     <div class="mb-3">
                         <label for="title" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="title" name="title"aria-describedby="title" placeholder="Ingrese el nombre">
+                        <input type="text" class="form-control" id="title" name="title"aria-describedby="title" placeholder="Ingrese el nombre" required>
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Precio</label>
-                        <input type="text" class="form-control" id="price" name="price" placeholder="Ingrese el precio">
+                        <input type="number" class="form-control" id="price" name="price" placeholder="Ingrese el precio" required>
                     </div>
                     <div class="mb-3">
                         <label for="thumbnail" class="form-label">Foto URL</label>
-                        <input type="text" class="form-control" id="thumbnail" name="thumbnail" placeholder="Ingrese la URL de la foto">
+                        <input type="text" class="form-control" id="thumbnail" name="thumbnail" placeholder="Ingrese la URL de la foto" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Crear !</button>
                 </form>
@@ -46,8 +47,8 @@
             <p>
                 <form id="formMensajes" class="form-inline" method="post">
                     <div class="input-group mb-3">
-                        <input type="text" name="autor" class="form-control" placeholder="Ingrese el correo electrónico" aria-describedby="button-addon2">
-                        <input type="text" id="mensaje" class="form-control" name="mensaje" placeholder="Escriba el mensaje" aria-describedby="button-addon2">
+                        <input type="email" name="autor" class="form-control" placeholder="Ingrese el correo electrónico" aria-describedby="button-addon2" required>
+                        <input type="text" id="mensaje" class="form-control" name="mensaje" placeholder="Escriba el mensaje" aria-describedby="button-addon2" required>
                         <button class="btn btn-primary" type="submit">Enviar !</button>
                     </div>
                 </form>
