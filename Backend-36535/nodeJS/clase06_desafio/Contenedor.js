@@ -18,6 +18,7 @@ class Contenedor
                     idMax = element.id;
             });
             idMax++;
+            
             const newObject = { title: objeto.title, price: objeto.price, thumbnail: objeto.thumbnail, id: idMax }
             data.push(newObject);
             await fs.promises.writeFile(this.nombre, JSON.stringify(data));
@@ -94,4 +95,4 @@ class Contenedor
     }
 }
 
-module.exports = {Contenedor}
+module.exports = { Contenedor }

@@ -20,7 +20,7 @@ io.on('connection', (socket) => // * connection se ejecuta la primera vez, cuand
     socket.on('new-message', (data) =>
     {
         mensajes.push(data);
-        socket.emit('mensajes', mensajes);
+        io.sockets.emit('mensajes', mensajes);
     });
 });
 

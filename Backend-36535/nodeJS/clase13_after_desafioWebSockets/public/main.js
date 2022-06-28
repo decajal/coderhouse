@@ -21,5 +21,4 @@ async function render(alumnos){
 	document.querySelector('#alumnos').innerHTML = html;
 }
 
-socket.on('alumnos', render);
-
+socket.on('alumnos', data => render(data));

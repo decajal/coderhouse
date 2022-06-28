@@ -5,7 +5,7 @@ socket.on('mensajes', (data) =>
     escrbirMensajes(data);
 });
 
-const addMessage = ((e) =>
+const addMessage = ( () =>
 {
     const mensaje = {
         author: document.getElementById('inputAuthor').value,

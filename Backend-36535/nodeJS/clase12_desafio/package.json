@@ -1,7 +1,7 @@
 {
   "name": "my-app-websocket",
   "version": "1.0.0",
-  "description": "webSockets",
+  "description": "Desafio de Websockets",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,5 +9,9 @@
     "dev": "nodemon server.js"
   },
   "author": "Diego Cajal",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1"
+  }
 }
