@@ -16,42 +16,46 @@
     <title>Desafio: webSockets</title>
 </head>
 <body>
-    
     <div class="container-sm d-grid gap-2">
+        <h1 class="display-1">Desafio: webSockets</h1>
         <div class="p-2 bg-light rounded">
-            <h1 class="display-5 text-primary">Ingreso de Productos</h1>
-            <form id="formProductos" method="post">
-                <div class="mb-3">
-                    <label for="title" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="title" name="title"aria-describedby="title" placeholder="Ingrese el nombre">
-                </div>
-                <div class="mb-3">
-                    <label for="price" class="form-label">Precio</label>
-                    <input type="text" class="form-control" id="price" name="price" placeholder="Ingrese el precio">
-                </div>
-                <div class="mb-3">
-                    <label for="thumbnail" class="form-label">Foto URL</label>
-                    <input type="text" class="form-control" id="thumbnail" name="thumbnail" placeholder="Ingrese la URL de la foto">
-                </div>
-                <button type="submit" class="btn btn-primary">Crear !</button>
-            </form>
-            <h1 class="display-5 text-primary">Lista de Productos</h1>
+            <p class="display-6 text-primary">Ingreso de Productos</p>
+            <p>
+                <form id="formProductos" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="title" name="title"aria-describedby="title" placeholder="Ingrese el nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Precio</label>
+                        <input type="text" class="form-control" id="price" name="price" placeholder="Ingrese el precio">
+                    </div>
+                    <div class="mb-3">
+                        <label for="thumbnail" class="form-label">Foto URL</label>
+                        <input type="text" class="form-control" id="thumbnail" name="thumbnail" placeholder="Ingrese la URL de la foto">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Crear !</button>
+                </form>
+            </p>
+            <p class="display-6 text-danger text-opacity-75">Lista de Productos</p>
             <div id="divProductos"></div>
         </div>
 
         <div class="p-2 bg-light rounded">
-            <h1 class="display-5 text-primary">Centro de Mensajes</h1>
-            <form id="formMensajes" class="form-inline" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" name="autor" class="form-control" placeholder="Ingrese el correo electrónico" aria-describedby="button-addon2">
-                    <input type="text" id="mensaje" class="form-control" name="mensaje" placeholder="Escriba el mensaje" aria-describedby="button-addon2">
-                    <button class="btn btn-primary" type="submit">Enviar !</button>
-                </div>
-            </form>
+            <p class="display-6 text-primary">Centro de Mensajes</p>
+            <p>
+                <form id="formMensajes" class="form-inline" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" name="autor" class="form-control" placeholder="Ingrese el correo electrónico" aria-describedby="button-addon2">
+                        <input type="text" id="mensaje" class="form-control" name="mensaje" placeholder="Escriba el mensaje" aria-describedby="button-addon2">
+                        <button class="btn btn-primary" type="submit">Enviar !</button>
+                    </div>
+                </form>
+            </p>
             <div class="card">
                 <div class="card-header">Mensajes enviados</div>
                 <div class="card-body" id="divCardBody"></div>
-            </div>                    
+            </div>
         </div>
     </div>
 

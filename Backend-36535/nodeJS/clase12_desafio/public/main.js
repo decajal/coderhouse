@@ -1,6 +1,7 @@
 const socket = io();
 
-document.querySelector('#formProductos').addEventListener('submit', (e) =>
+const formProductos  = document.querySelector('#formProductos');
+formProductos.addEventListener('submit', (e) =>
 {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -11,7 +12,7 @@ document.querySelector('#formProductos').addEventListener('submit', (e) =>
         thumbnail: data.get('thumbnail'),
     }
     socket.emit('nuevo-Producto', nuevoProducto);
-    e.reset();
+    formProductos.reset();
 });
 
 document.querySelector('#formMensajes').addEventListener('submit', (e) =>

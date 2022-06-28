@@ -1,6 +1,6 @@
 {{#each mensajes}}
     <div>
-        <strong>{{this.autor}}[{{this.fecha}}]: </strong>
-        <em>{{this.mensaje}}</em>
+        <span class="fw-bold text-primary">{{this.autor}}</span> [<span class=" text-danger">{{this.fecha}}</span>]: 
+        <span class="text-success fw-light fst-italic">{{this.mensaje}}</span>
     </div>
 {{/each}}
