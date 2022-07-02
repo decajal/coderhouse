@@ -1,0 +1,30 @@
+{
+  "carritos": [
+    {
+      "timestamp": 1656705703800,
+      "productos": [
+        {
+          "timestamp": 1656720942033,
+          "nombre": "Ecolapices De Color Supersoft Faber Castell",
+          "descripcion": "Caja X 50 Colores",
+          "codigo": "321",
+          "foto": "https://www.iconfinder.com/icons/2824443/pen_pencil_school_stationery_icon",
+          "precio": 5900,
+          "stock": 25,
+          "id": 6
+        },
+        {
+          "timestamp": 1656721219527,
+          "nombre": "Lápices Shwey Largos X12 Colores",
+          "descripcion": "Lápices Lápiz Pinturitas Escolares Shwey Largos X12 Colores",
+          "codigo": "300",
+          "foto": "https://www.iconfinder.com/icons/2824443/pen_pencil_school_stationery_icon",
+          "precio": 200,
+          "stock": 2560,
+          "id": 8
+        }
+      ],
+      "id": 1
+    }
+  ]
+}
