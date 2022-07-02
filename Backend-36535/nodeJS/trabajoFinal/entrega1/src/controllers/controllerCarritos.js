@@ -26,9 +26,24 @@ export const postCart = async (req, res) => {
     }
 }
 
-export const delCart = (req, res) => {
-    // que quiere decir con el tema de vaciar el carrito y eliminarlo... no entendí ese punto
-    res.json('Del de carritos');
+export const delCart = async (req, res) => {
+    // "vacía" el carrito (no se entiende que se pide en ese punto)
+    // Elimina el carrito
+    const idCart = req.params.id;
+
+    try {
+        const db = getData();
+        const cartFound = db.data.carritos.find(x => x.id === parseInt(idCart));
+        if (!cartFound) return res.status(404).json({message: 'Carrito no encontrado'});
+
+        const newArray = db.data.carritos.filter(x => x.id !== parseInt(idCart));
+        db.data.carritos = newArray;
+        await db.write();
+        
+        res.status(200).json({message: 'Carrito eliminado'});
+    } catch (error) {
+        return res.status(500).json({message: error.message});
+    }
 }
 
 // Acciones sobre los productos del carrito

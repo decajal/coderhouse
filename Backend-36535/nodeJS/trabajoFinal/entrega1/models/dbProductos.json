@@ -2,7 +2,7 @@
   "productos": [
     {
       "timestamp": 1656704898434,
-      "nombre": "Regla",
+      "nombre": "Regla corta",
       "descripcion": "largo standard 20cm plastico transparente",
       "codigo": "123",
       "foto": "https://www.iconfinder.com/icons/2824436/ruler_school_stationary_triangle_icon",
@@ -79,6 +79,46 @@
       "precio": 700,
       "stock": 25600,
       "id": 9
+    },
+    {
+      "timestamp": 1656774847883,
+      "nombre": "Regla",
+      "descripcion": "largo standard 20cm plastico transparente",
+      "codigo": "123",
+      "foto": "https://www.iconfinder.com/icons/2824436/ruler_school_stationary_triangle_icon",
+      "precio": 180,
+      "stock": 35,
+      "id": 10
+    },
+    {
+      "timestamp": 1656774943771,
+      "nombre": "Regla",
+      "descripcion": "largo standard 20cm plastico transparente",
+      "codigo": "123",
+      "foto": "https://www.iconfinder.com/icons/2824436/ruler_school_stationary_triangle_icon",
+      "precio": 180,
+      "stock": 35,
+      "id": 11
+    },
+    {
+      "timestamp": 1656775081789,
+      "nombre": "Regla",
+      "descripcion": "largo standard 20cm plastico transparente",
+      "codigo": "123",
+      "foto": "https://www.iconfinder.com/icons/2824436/ruler_school_stationary_triangle_icon",
+      "precio": 180,
+      "stock": 35,
+      "id": 12
+    },
+    {
+      "timestamp": 1656775228978,
+      "nombre": "Regla",
+      "descripcion": "largo standard 20cm plastico transparente",
+      "codigo": "123",
+      "foto": "https://www.iconfinder.com/icons/2824436/ruler_school_stationary_triangle_icon",
+      "precio": 180,
+      "stock": 35,
+      "id": 13
     }
   ]
 }

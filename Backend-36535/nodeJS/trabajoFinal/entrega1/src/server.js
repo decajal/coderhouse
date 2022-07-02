@@ -7,7 +7,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 server.use('/api/productos/', routerProductos);
-server.use('/api/carritos/', routerCarritos);
+server.use('/api/carrito/', routerCarritos);
 server.use((req, res) => {
     const path =  req.originalUrl;
     const metodo = req.method;

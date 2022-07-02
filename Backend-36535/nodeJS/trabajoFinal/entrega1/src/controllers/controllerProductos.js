@@ -1,4 +1,6 @@
 import { getData } from './dbProductos.js';
+import { administrador } from '../../index.js';
+
 export const get = (req, res) => {
     const id = req.params.id ?? null;
     try {
@@ -15,7 +17,16 @@ export const get = (req, res) => {
     }
 }
 
+const autorizar = (path, metod) =>
+{
+    if (!administrador)
+        return {error: -2, descripcion: `ruta \'${path}\' método \'${metod}\' no autorizada`}
+}
+
 export const post = async (req, res) => {
+    const auth = autorizar(req.originalUrl, req.method);
+    if (auth != null) return res.status(401).json(auth);
+
     const newReg = {
         timestamp: +new Date(),
         nombre: req.body.nombre,
@@ -44,6 +55,9 @@ export const post = async (req, res) => {
 }
 
 export const put = async (req, res) => {
+    const auth = autorizar(req.originalUrl, req.method);
+    if (auth != null) return res.status(401).json(auth);
+
     const id = req.params.id;
     try {
         const db = getData();
@@ -65,6 +79,9 @@ export const put = async (req, res) => {
 }
 
 export const del = async (req, res) => {
+    const auth = autorizar(req.originalUrl, req.method);
+    if (auth != null) return res.status(401).json(auth);
+
     const id = req.params.id;
     try {
         const db = getData();
