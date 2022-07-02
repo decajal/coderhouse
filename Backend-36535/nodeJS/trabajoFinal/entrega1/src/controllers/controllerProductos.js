@@ -20,7 +20,7 @@ export const get = (req, res) => {
 const autorizar = (path, metod) =>
 {
     if (!administrador)
-        return {error: -2, descripcion: `ruta \'${path}\' método \'${metod}\' no autorizada`}
+        return {error: -1, descripcion: `ruta \'${path}\' método \'${metod}\' no autorizada`}
 }
 
 export const post = async (req, res) => {
