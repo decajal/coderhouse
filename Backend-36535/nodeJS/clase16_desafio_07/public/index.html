@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+		integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script src="/socket.io/socket.io.js"></script>
+    <title>Desafio: Bases de Datos</title>
+</head>
+<body>
+	<div class="container-sm d-grid gap-2">
+        <h1 class="display-1">Desafio: Bases de Datos</h1>
+        <figcaption class="blockquote-footer">Ing. Diego Cajal (decajalperez@teco.com.ar)</figcaption>
+		<div class="p-2 bg-light rounded">
+			<p class="display-6 text-primary">Centro de Mensajes</p>
+			<p>
+				<form id="formMensajes" class="form-inline" method="post">
+					<div class="input-group mb-3">
+						<input type="email" name="autor" class="form-control" placeholder="Ingrese el correo electrónico" aria-describedby="button-addon2" required>
+						<input type="text" id="mensaje" class="form-control" name="mensaje" placeholder="Escriba el mensaje" aria-describedby="button-addon2" required>
+						<button class="btn btn-primary" type="submit">Enviar !</button>
+					</div>
+				</form>
+			</p>
+			<div class="card">
+				<div class="card-header">Mensajes enviados</div>
+				<div class="card-body" id="divCardBody"></div>
+			</div>
+		</div>
+	</div>
+    <script src="/main.js"></script>
+</body>
+</html>

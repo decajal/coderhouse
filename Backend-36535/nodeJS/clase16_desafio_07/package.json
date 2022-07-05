@@ -1,11 +1,10 @@
 {
-  "name": "my_first_database",
+  "name": "my-app-database",
   "version": "1.0.0",
-  "description": "Nuestra primera Base de Datos: Knex con mariaDB/SQLite3",
+  "description": "Desafio de Bases de Datos",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ing. Diego Cajal",
@@ -14,7 +13,6 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "knex": "^2.1.0",
-    "mysql": "^2.18.1",
     "socket.io": "^4.5.1",
     "sqlite3": "^5.0.8"
   }

@@ -24,7 +24,7 @@ io.on('connection', async (socket) =>
     const listaProductos = await productos.getAll();
     socket.emit('productos', listaProductos);
 
-    socket.on('nuevo-Producto', async (nuevoProducto) => 
+    socket.on('nuevo-Producto', async (nuevoProducto) =>
     {
         // nuevo producto
         const listaProductos = await productos.save(nuevoProducto);
