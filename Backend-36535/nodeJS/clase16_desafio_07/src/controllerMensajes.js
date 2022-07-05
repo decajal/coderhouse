@@ -1,4 +1,4 @@
-const { tableExists, getAll, createTable, addRecord } = require('./repoSQLite');
+const { tableExists, getAll, createTable, addRecord } = require('./repoMensajes');
 
 const getAllMessages = async () =>
 {

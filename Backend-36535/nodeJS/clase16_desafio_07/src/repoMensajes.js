@@ -1,16 +1,16 @@
 const db = require('../db/connect');
-const tablaMensajes = 'mensajes';
+const tabla = 'mensajes';
 
 const tableExists = async () =>
 {
-    const exists = await db.schema.hasTable(tablaMensajes);
+    const exists = await db.schema.hasTable(tabla);
     return exists;
 }
 
 const createTable = async () =>
 {
     try {
-        await db.schema.createTable(tablaMensajes, table =>
+        await db.schema.createTable(tabla, table =>
             {
                 table.increments();
                 table.text('autor', 255);
@@ -25,16 +25,20 @@ const addRecord = async (newRecord) =>
     try {
         const { autor, mensaje } = newRecord;
         const fecha = new Date().toLocaleString();
-        await db.insert({ autor, mensaje, fecha }).into(tablaMensajes);
+        await db.insert({ autor, mensaje, fecha }).into(tabla);
     } catch (error) { throw error; }
 }
 
 const getAll = async () =>
 {
     try {
-        const data = await db.select().table(tablaMensajes);
+        const data = await db.select().table(tabla);
         return data;
     } catch (error) { throw error; }
 }
 
-module.exports = { tableExists, createTable, addRecord, getAll }
+module.exports = { 
+    tableExists,
+    createTable, 
+    addRecord, 
+    getAll }
