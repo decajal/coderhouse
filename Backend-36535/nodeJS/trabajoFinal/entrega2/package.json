@@ -1,0 +1,11 @@
+{
+  "name": "proyecto-final-entrega2",
+  "version": "1.0.0",
+  "description": "Proyecto Final - Curso nodeJS coderhouse, segunda entrega",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ing. Diego Cajal",
+  "license": "ISC"
+}
