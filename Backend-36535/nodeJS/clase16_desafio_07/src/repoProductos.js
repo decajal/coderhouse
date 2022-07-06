@@ -13,8 +13,9 @@ const createTable = async () =>
         await db.schema.createTable(tabla, table =>
             {
                 table.increments();
-                table.text('autor', 255);
-                table.text('mensaje', 255);
+                table.text('title', 255);
+                table.real('price');
+                table.text('thumbnail', 255);
                 table.text('fecha', 255);
             });            
     } catch (error) { throw error; }
@@ -23,9 +24,9 @@ const createTable = async () =>
 const addRecord = async (newRecord) =>
 {
     try {
-        const { autor, mensaje } = newRecord;
+        const { title, price, thumbnail } = newRecord;
         const fecha = new Date().toLocaleString();
-        await db.insert({ autor, mensaje, fecha }).into(tabla);
+        await db.insert({ title, price, thumbnail, fecha }).into(tabla);
     } catch (error) { throw error; }
 }
 
