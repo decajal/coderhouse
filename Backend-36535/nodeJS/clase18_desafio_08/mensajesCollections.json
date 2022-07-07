@@ -1,0 +1,111 @@
+[{
+  "_id": {
+    "$oid": "62c64b031715ecaa65d0dbd8"
+  },
+  "autor": "decajal@gmail.com",
+  "mensaje": "Esto no llega a la Base de Datos",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657058703000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64b131715ecaa65d0dbd9"
+  },
+  "autor": "decajal@gmail.com",
+  "mensaje": "Esto es un segundo mensaje",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657058822000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64b251715ecaa65d0dbda"
+  },
+  "autor": "decajal@gmail.com",
+  "mensaje": "Luego de hacer un Refactor",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657062021000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64b361715ecaa65d0dbdb"
+  },
+  "autor": "decajal@gmail.com",
+  "mensaje": "Funcionalidad completa con SQLite3 !",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657073433000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64b451715ecaa65d0dbdc"
+  },
+  "autor": "decajal@gmail.com",
+  "mensaje": "Hola !!",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657161003000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64b571715ecaa65d0dbdd"
+  },
+  "autor": "decajal@gmail.com",
+  "mensaje": "Consultas sobre los productos que tienen a la venta",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657161020000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64b651715ecaa65d0dbde"
+  },
+  "autor": "decajal@gmail.com",
+  "mensaje": "hacen envíos ?",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657161027000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64b8d1715ecaa65d0dbdf"
+  },
+  "autor": "libreria_pepito@gmail.com",
+  "mensaje": "Hola !",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657161104000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64bb91715ecaa65d0dbe0"
+  },
+  "autor": "libreria_pepito@gmail.com",
+  "mensaje": "No hacemos envíos por menos de una compra de 2000 en la ciudad",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657161121000"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62c64be71715ecaa65d0dbe1"
+  },
+  "autor": "libreria_pepito@gmail.com",
+  "mensaje": "Para emvíos a otras ciudades el comprador abona el envío al llegar el producto",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657161139000"
+    }
+  }
+}]

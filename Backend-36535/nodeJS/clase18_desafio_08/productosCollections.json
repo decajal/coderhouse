@@ -1,0 +1,92 @@
+[{
+  "_id": {
+    "$oid": "62c64d871715ecaa65d0dbe2"
+  },
+  "title": "Calculadora no cientifica",
+  "price": 1500,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-512.png",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657073109000"
+    }
+  },
+  "stock": 100
+},{
+  "_id": {
+    "$oid": "62c64e541715ecaa65d0dbe3"
+  },
+  "title": "Libreta de notas",
+  "price": 2300,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-512.png",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657073192000"
+    }
+  },
+  "stock": 100
+},{
+  "_id": {
+    "$oid": "62c64ed21715ecaa65d0dbe5"
+  },
+  "title": "Globo terraqueo",
+  "price": 3000,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-512.png",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657073287000"
+    }
+  },
+  "stock": 100
+},{
+  "_id": {
+    "$oid": "62c64f0c1715ecaa65d0dbe6"
+  },
+  "title": "Pizarron",
+  "price": 4950,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-512.png",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657160804000"
+    }
+  },
+  "stock": 0
+},{
+  "_id": {
+    "$oid": "62c64fc81715ecaa65d0dbeb"
+  },
+  "title": "Microscopio",
+  "price": 4800,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/microscope-lab-science-school-512.png",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657160942000"
+    }
+  },
+  "stock": 0
+},{
+  "_id": {
+    "$oid": "62c650e91715ecaa65d0dbec"
+  },
+  "title": "Calculadora Cientifica",
+  "price": 3780,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-512.png",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657164002000"
+    }
+  },
+  "stock": 100
+},{
+  "_id": {
+    "$oid": "62c6eb05c1c3ede185cc25ad"
+  },
+  "title": "Calculadora Cientifica HP",
+  "price": 4999,
+  "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-512.png",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1657203242000"
+    }
+  },
+  "stock": 100
+}]
