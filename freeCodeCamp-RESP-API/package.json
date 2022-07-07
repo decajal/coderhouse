@@ -1,0 +1,19 @@
+{
+  "name": "freecodecamp-resp-api",
+  "version": "1.0.0",
+  "description": "> I've created and consumed many API's over the past few years. During that time, >I've come across good and bad practices and have experienced nasty situations >when consuming and building API's. But there also have been great moments.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
