@@ -1,0 +1,16 @@
+{
+  "name": "clase23_cookies",
+  "version": "1.0.0",
+  "description": "Clase 23: Cookies",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ing. Diego Cajal",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.1"
+  }
+}

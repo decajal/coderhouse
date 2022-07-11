@@ -19,9 +19,12 @@ const empresaSchema = new schema.Entity("empresa", {
 });
 
 const normalizeEmpresa = normalize(empresa, empresaSchema);
-print('Normalizado:');
+print("Normalizado:");
 print(normalizeEmpresa);
-const desnormalizeEmpresa = denormalize(normalizeEmpresa.result, empresaSchema, normalizeEmpresa.entities);
-print('Desnormalizado:');
+const desnormalizeEmpresa = denormalize(
+  normalizeEmpresa.result,
+  empresaSchema,
+  normalizeEmpresa.entities
+);
+print("Desnormalizado:");
 print(desnormalizeEmpresa);
-
