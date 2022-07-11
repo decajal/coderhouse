@@ -1,6 +1,6 @@
 import { divTitles, divContainer } from "../main.js"
 
-const apiKey = "32abd15bcea93fcab327aa0fc93f6ee8"; // mi API key de openWeather
+const apiKey = ""; // mi API key de openWeather
 
 export function weather()
 {
