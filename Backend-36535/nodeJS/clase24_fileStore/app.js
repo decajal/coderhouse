@@ -1,53 +1,26 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const session = require("express-session");
-const User = require("./models/Users");
-//const fileStore = require("session-file-store");
-
-//const Store = fileStore(session); // con esto creamos el store
+const User = require("./models/User");
 
 const app = express();
-const server = app.listen(8080, () => console.log("Server up"));
 
-// Esto es la primer parte de la clase donde probamos guardando en el fileStore, ahora trabajaremos sobre mongo
-// app.use(
-//   session({
-//     store: new Store({
-//       path: "./sessions",
-//       ttl: 60, // session time to live in seconds: 60 segundos
-//     }),
-//     secret: "c0d3r",
-//     resave: true,
-//     saveUninitialized: true,
-//     cookie: { maxAge: 60000 }, // 60 segundos
-//   })
-// );
+const server = app.listen(8080, () => console.log("Server Up"));
 
-// app.get("/", (req, res) => {
-//   req.session.user = {
-//     username: "alex",
-//     role: "admin",
-//   };
-//   res.send({ message: "ok" });
-// });
-
-// app.get("/currentUser", (req, res) => {
-//   res.send(req.session.user);
-// });
-
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+app.use(cookieParser());
 app.use(
   session({
     key: "user_sid",
     secret: "c0d3r",
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 600000 },
   })
 );
 
-// ESTO ES UN MIDDLEWARE !! TAL Y CUAL COMO LO DEBERÍAMOS HABER VISTO CON NAVAS
-const sessionChequer = (req, res, next) => {
+const sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
     res.redirect("/dashboard");
   } else {
@@ -55,17 +28,30 @@ const sessionChequer = (req, res, next) => {
   }
 };
 
-app.get("/", sessionChequer, (req, res) => {
+app.get("/", sessionChecker, (req, res) => {
   res.redirect("/login");
 });
 
-app.route("/login").get(sessionChequer, (req, res) => {
-  res.sendFile(__dirname + "/public/login.html");
-});
+app
+  .route("/login")
+  .get(sessionChecker, (req, res) => {
+    res.sendFile(__dirname + "/public/login.html");
+  })
+  .post(async (req, res) => {
+    const { username, password } = req.body;
+    const docs = await User.findOne({ username: username });
+    const comp = docs.comparePassword(password, docs.password);
+    if (comp) {
+      req.session.user = docs;
+      res.redirect("/dashboard");
+    } else {
+      res.redirect("/login");
+    }
+  });
 
 app
   .route("/signup")
-  .get(sessionChequer, (req, res) => {
+  .get(sessionChecker, (req, res) => {
     res.sendFile(__dirname + "/public/signup.html");
   })
   .post((req, res) => {
@@ -75,7 +61,9 @@ app
       password: req.body.password,
     });
     user.save((err, docs) => {
+      console.log(user);
       if (err) {
+        console.log(err);
         res.redirect("/signup");
       } else {
         req.session.user = docs;
@@ -86,8 +74,17 @@ app
 
 app.get("/dashboard", (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
-    res.sendFile(__dirname + "public/dashboard.html");
+    res.sendFile(__dirname + "/public/dashboard.html");
   } else {
     res.redirect("/login");
+  }
+});
+
+app.get("/logout", (req, res) => {
+  if (req.session) {
+    req.session.destroy(() => {
+      req.session = null;
+      res.redirect("/");
+    });
   }
 });
