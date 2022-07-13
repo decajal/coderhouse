@@ -1,42 +1,59 @@
-require('dotenv').config();
-const express = require('express')
-const {Server: HttpServer} = require('http')
-const {Server: IOServer} = require('socket.io');
+require("dotenv").config();
+const path = require("path");
+const express = require("express");
+const { Server: HttpServer } = require("http");
+const { Server: IOServer } = require("socket.io");
+const { engine } = require("express-handlebars");
 
-const app = express()
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, "public")));
 
-const { getAllMessages, addMessage } = require('./src/controllerMensajes');
-const { getAllProducts, addProduct } = require('./src/controllerProductos');
+app.set("views", path.join(__dirname, "public"));
+app.engine(
+  "hbs",
+  engine({
+    defaultLayout: "index.hbs",
+    extname: ".hbs",
+  })
+);
+app.set("view engine", "hbs");
 
-const httpServer = new HttpServer(app)
-const io = new IOServer(httpServer)
+const router = require("./src/routers/routeProductos");
+const products = require("./src/controllerProductos");
+const messages = require("./src/controllerMensajes"); // Esta persistencia es la que hay que cambiar
+const otherMessages = require("./src/controllerMensajesMongo");
+
+app.use("/api/productos-test", router);
+
+const httpServer = new HttpServer(app);
+const io = new IOServer(httpServer);
 const port = process.env.PORT || 8080;
 
 httpServer.listen(port, () => console.log(`Server ON, Port: ${port}`));
 
-io.on('connection', async (socket) => 
-{
-    console.log('Nueva conexión');
+io.on("connection", async (socket) => {
+  console.log("Nueva conexión");
 
-    const productos = await getAllProducts();
-    socket.emit('productos', productos);
+  const productos = await products.getAllProducts();
+  socket.emit("productos", productos);
 
-    socket.on('nuevo-producto', async (newProduct) => {
-        await addProduct(newProduct);
-        const productos = await getAllProducts();
-        io.sockets.emit('productos', productos);
-    });
-    
-    const mensajes = await getAllMessages();
-    socket.emit('mensajes', mensajes);
+  socket.on("nuevo-producto", async (newProduct) => {
+    await products.addProduct(newProduct);
+    const productos = await products.getAllProducts();
+    io.sockets.emit("productos", productos);
+  });
 
-    socket.on('nuevo-mensaje', async (newMessage) => {
-        await addMessage(newMessage);
-        const mensajes = await getAllMessages();
-        io.sockets.emit('mensajes', mensajes);
-    });
+  const mensajes = await messages.getAllMessages();
+  socket.emit("mensajes", mensajes);
+
+  socket.on("nuevo-mensaje", async (newMessage) => {
+    // await messages.addMessage(newMessage);
+    // const mensajes = await messages.getAllMessages();
+
+    const result = await otherMessages.addMessage(newMessage);
+    console.log(result); // Este es un mensaje: Nuevo registro agregado
+    //io.sockets.emit("mensajes", mensajes);
+  });
 });
-
