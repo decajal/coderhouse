@@ -40,13 +40,17 @@ app
   .post(async (req, res) => {
     const { username, password } = req.body;
     const docs = await User.findOne({ username: username });
-    const comp = docs.comparePassword(password, docs.password);
-    if (comp) {
-      req.session.user = docs;
-      res.redirect("/dashboard");
-    } else {
+    if (!docs) {
       res.redirect("/login");
+      return;
     }
+    const comp = docs.comparePassword(password, docs.password);
+    if (!comp) {
+      res.redirect("/login");
+      return;
+    }
+    req.session.user = docs;
+    res.redirect("/dashboard");
   });
 
 app
