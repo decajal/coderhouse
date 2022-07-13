@@ -41,14 +41,17 @@ app
     const { username, password } = req.body;
     const docs = await User.findOne({ username: username });
     if (!docs) {
+      // No existe el usuario en mongoDB
       res.redirect("/login");
       return;
     }
     const comp = docs.comparePassword(password, docs.password);
     if (!comp) {
+      // La contraseña ingresada no es la correcta
       res.redirect("/login");
       return;
     }
+    // Usuario y contraseña correctos, va para el dashboard
     req.session.user = docs;
     res.redirect("/dashboard");
   });
