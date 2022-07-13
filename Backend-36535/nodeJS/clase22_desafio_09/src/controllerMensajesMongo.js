@@ -18,6 +18,7 @@ const addMessage = async (newRecord) => {
       avatar: autor.avatar,
     },
     text: mensaje,
+    fecha: new Date(),
   });
   await newMensaje.save();
   return "Nuevo mensaje agregado";

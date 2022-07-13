@@ -32,6 +32,9 @@ const mensajeSchema = new Schema({
     type: String,
     required: true,
   },
+  fecha: {
+    type: Date,
+  },
 });
 
 module.exports = model(mensajeCollection, mensajeSchema);
