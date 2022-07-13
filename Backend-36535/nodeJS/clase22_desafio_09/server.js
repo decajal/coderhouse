@@ -26,17 +26,6 @@ const products = require("./src/controllerProductos");
 //const messages = require("./src/controllerMensajes"); // Esta persistencia es la que hay que cambiar
 const messagesMongoDB = require("./src/controllerMensajesMongo"); // Mensajes que vienen de mongoDB
 
-// Definiciones de normalizr
-const authorSchema = new schema.Entity("author");
-const messageSchema = new schema.Entity(
-  "mensajes",
-  { author: authorSchema },
-  { idAttribute: "_id" }
-);
-const configNormalizr = new schema.Entity("configNormalizr", {
-  messages: [messageSchema],
-});
-
 app.use("/api/productos-test", router);
 
 const httpServer = new HttpServer(app);
@@ -45,10 +34,29 @@ const port = process.env.PORT || 8080;
 
 httpServer.listen(port, () => console.log(`Server ON, Port: ${port}`));
 
+const getDataNormalized = (data_to_normalize) => {
+  const messages = JSON.parse(JSON.stringify(data_to_normalize));
+  const authorSchema = new schema.Entity("authors");
+  const messageSchema = new schema.Entity(
+    "mensajes",
+    {
+      author: authorSchema,
+    },
+    { idAttribute: "_id" }
+  );
+  const global = new schema.Entity("global", {
+    messages: [messageSchema],
+  });
+  const data = { id: "mensajes", messages };
+  const dataNormalized = normalize(data, global);
+
+  return dataNormalized;
+};
+
 io.on("connection", async (socket) => {
   console.log("Nueva conexión");
 
-  // a los productos se le manteniene la persistencia como venía
+  // A los productos se le manteniene la persistencia como venía
   const productos = await products.getAllProducts();
   socket.emit("productos", productos);
 
@@ -58,21 +66,14 @@ io.on("connection", async (socket) => {
     io.sockets.emit("productos", productos);
   });
 
-  //const mensajes = await messages.getAllMessages(); // esta es la persistencia anterior
   const dataMongoDB = await messagesMongoDB.getAllMessages();
-  // Hay que normalizar 'mensajes'
-  const dataMongoDBstringify = JSON.stringify(dataMongoDB);
-  const recordToNormalizr = { id: "mensajes", dataMongoDBstringify };
-  const messages = normalize(recordToNormalizr, configNormalizr);
-  console.log(messages);
-  socket.emit("mensajes", messages); // envía los mensajes que están en el servidor
+  const dataNormalizr = getDataNormalized(dataMongoDB);
+  socket.emit("mensajes", dataNormalizr);
 
   socket.on("nuevo-mensaje", async (newMessage) => {
-    // await messages.addMessage(newMessage);
-    // const mensajes = await messages.getAllMessages();
-
-    const result = await messagesMongoDB.addMessage(newMessage); // guarda el nuevo mensaje en mongoDB
-    console.log(result); // Este es un mensaje: Nuevo registro agregado
-    //io.sockets.emit("mensajes", mensajes);
+    await messagesMongoDB.addMessage(newMessage);
+    const dataMongoDB = await messagesMongoDB.getAllMessages();
+    const dataNormalizr = getDataNormalized(dataMongoDB);
+    io.sockets.emit("mensajes", dataNormalizr);
   });
 });

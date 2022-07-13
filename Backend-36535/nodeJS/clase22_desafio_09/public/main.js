@@ -1,14 +1,3 @@
-// Definiciones de normalizr
-const authorSchema = new normalizr.schema.Entity("author");
-const messageSchema = new normalizr.schema.Entity(
-  "mensajes",
-  { author: authorSchema },
-  { idAttribute: "_id" }
-);
-const configNormalizr = new normalizr.schema.Entity("configNormalizr", {
-  messages: [messageSchema],
-});
-
 const socket = io();
 
 const formProductos = document.querySelector("#formProductos");
@@ -27,11 +16,6 @@ formProductos.addEventListener("submit", (e) => {
 document.querySelector("#formMensajes").addEventListener("submit", (e) => {
   e.preventDefault();
   const data = new FormData(e.target);
-  // const newMessage =
-  // {
-  //     autor: data.get('autor'),
-  //     mensaje: data.get('mensaje'),
-  // }
   const newMessage = {
     autor: {
       mail: data.get("mail"),
@@ -66,11 +50,27 @@ const renderMensajes = async (mensajes) => {
   document.querySelector("#divCardBody").innerHTML = html;
 };
 socket.on("productos", (data) => renderProductos(data));
-socket.on("mensajes", (dataNormalizr) => {
-  const dataDenormalizr = normalizr.denormalize(
-    dataNormalizr.result,
-    configNormalizr,
-    dataNormalizr.entities
+
+socket.on("mensajes", (mensajes) => {
+  console.log(mensajes);
+
+  const authorSchema = new normalizr.schema.Entity("authors");
+  const messageSchema = new normalizr.schema.Entity(
+    "mensajes",
+    {
+      author: authorSchema,
+    },
+    { idAttribute: "_id" }
   );
-  renderMensajes(dataDenormalizr);
+  const global = new normalizr.schema.Entity("global", {
+    messages: [messageSchema],
+  });
+
+  const chat = normalizr.denormalize(
+    mensajes.result,
+    global,
+    mensajes.entities
+  );
+  console.log(chat.messages);
+  renderMensajes(chat.messages);
 });
