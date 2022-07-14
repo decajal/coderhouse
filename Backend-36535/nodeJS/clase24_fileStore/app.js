@@ -16,7 +16,7 @@ app.use(
     secret: "c0d3r",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 600000 },
+    cookie: { maxAge: 15000 },
   })
 );
 
