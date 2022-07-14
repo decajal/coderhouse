@@ -8,7 +8,6 @@ const storeMongo = require("connect-mongo");
 const { engine } = require("express-handlebars");
 const User = require("./models/User");
 
-//const port = process.env.PORT || 8080;
 const app = express();
 
 app.use(express.json());
@@ -100,7 +99,7 @@ app.post("/signup", async (req, res) => {
   });
   newUser.save((err, doc) => {
     if (err) {
-      //console.log(err);
+      console.log(err);
       res.redirect("/signup");
     } else res.redirect("/login");
   });

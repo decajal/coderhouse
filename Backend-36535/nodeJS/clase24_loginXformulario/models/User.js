@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 //const collectionsMongo = "dbUsers";
 //const uri = path.join(process.env.MONGO_URI, collectionsMongo); // con esto me da error
 //const uri = process.env.MONGO_URI + "/" + process.env.MONGO_COLLECTION;
-const uri = process.env.MONGO_ATLAS + "/" + process.env.MONGO_COLLECTION;
+const uri = process.env.MONGO_ATLAS;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
