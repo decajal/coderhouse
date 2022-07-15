@@ -1,0 +1,11 @@
+{
+  "name": "login-por-formulario",
+  "version": "1.0.0",
+  "description": "Desafio case 24 numero 10: Login por Formulario usando mongo Atlas para las sessions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ing. Diego Cajal",
+  "license": "ISC"
+}
