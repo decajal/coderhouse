@@ -1,4 +1,3 @@
-const session = require("express-session");
 const app = require("./src/server");
 
 const port = process.env.PORT || 3000;
@@ -6,7 +5,7 @@ app.listen(port, () => console.log("Server up on port:", port));
 
 const sessionCheck = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
-    res.redirect("/dashboar");
+    res.redirect("/dashboard");
     return;
   }
   next();
@@ -36,9 +35,10 @@ app.get("/dashboard", (req, res) => {
 
 app.post("/logout", (req, res) => {
   if (req.session) {
+    const userName = req.session.user.username;
     req.session.destroy(() => {
       req.session = null;
-      res.render("logout");
+      res.render("logout", { userName });
     });
   }
 });
