@@ -29,14 +29,14 @@ server.use(
   session({
     store: storeMongo.create({
       mongoUrl: uri,
-      ttl: 10 * 60, // Esto creo que son los 10 minutos del enunciado
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
     }),
     key: "user_sid",
     secret: "c0d3R",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60000 }, // 60 segundos: 1 minto para la cookie local
+    rolling: true,
+    cookie: { maxAge: 60 * 1000 }, // 60 segundos: 1 minuto para la cookie local
   })
 );
 

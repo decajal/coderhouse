@@ -1,0 +1,17 @@
+{
+  "name": "inicio-de-sesion",
+  "version": "1.0.0",
+  "description": "Desafio clase 25 numero 11: inicio de sesion usando Passport local, bcrypt y mongoDB",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ing. Diego Cajal",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
+}
