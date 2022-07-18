@@ -2,7 +2,10 @@ const User = require("../models/User");
 
 const getLogin = (req, res) => {
   if (req.isAuthenticated()) {
-    return res.render("dashboard", { userName: req.user.nombre });
+    return res.render("dashboard", {
+      userName: req.user.nombre,
+      email: req.user.email,
+    });
   }
   res.render("login");
 };
@@ -12,7 +15,7 @@ const getFailLogin = (req, res) => {
 };
 
 const postLogin = (req, res) => {
-  res.render("dashboard", { userName: req.user.nombre });
+  res.render("dashboard", { userName: req.user.nombre, email: req.user.email });
 };
 
 const getSignup = (req, res) => {
