@@ -3,6 +3,8 @@ const router = new Router();
 const passport = require("passport");
 const controllerAuth = require("../controllers/controllerAuth");
 
+const checkSessions = require("./utils");
+
 router.get("/", controllerAuth.getLogin);
 // Login
 router.get("/login", controllerAuth.getLogin);
@@ -19,7 +21,7 @@ router.get("/failLogin", controllerAuth.getFailLogin);
 router.get("/signup", controllerAuth.getSignup);
 router.post("/signup", controllerAuth.postSignup);
 
-router.get("/dashboard", controllerAuth.getLogin);
+router.get("/dashboard", checkSessions, controllerAuth.getDashBoard);
 
 router.post("/logout", controllerAuth.getLogout);
 

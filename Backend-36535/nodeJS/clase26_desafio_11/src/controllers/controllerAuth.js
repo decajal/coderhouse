@@ -2,12 +2,8 @@ const User = require("../models/User");
 
 const getLogin = (req, res) => {
   if (req.isAuthenticated()) {
-    return res.render("dashboard", {
-      userName: req.user.nombre,
-      email: req.user.email,
-    });
-  }
-  res.render("login");
+    res.redirect("/dashboard");
+  } else res.render("login");
 };
 
 const getFailLogin = (req, res) => {
@@ -15,7 +11,8 @@ const getFailLogin = (req, res) => {
 };
 
 const postLogin = (req, res) => {
-  res.render("dashboard", { userName: req.user.nombre, email: req.user.email });
+  //res.render("dashboard", { userName: req.user.nombre, email: req.user.email });
+  res.redirect("/dashboard");
 };
 
 const getSignup = (req, res) => {
@@ -43,6 +40,13 @@ const postSignup = async (req, res) => {
   });
 };
 
+const getDashBoard = (req, res) => {
+  res.render("dashboard", {
+    userName: req.user.nombre,
+    email: req.user.email,
+  });
+};
+
 const getLogout = (req, res) => {
   const userName = req.user.nombre;
   req.logout((err) => {
@@ -56,5 +60,6 @@ module.exports = {
   postLogin,
   getSignup,
   postSignup,
+  getDashBoard,
   getLogout,
 };
