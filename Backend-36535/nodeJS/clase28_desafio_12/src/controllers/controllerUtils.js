@@ -21,16 +21,15 @@ const getInfo = (req, res) => {
 };
 
 const getRandoms = (req, res) => {
-  const repeticiones = req.query.cant || 10000; // 100000000;
+  const repeticiones = req.query.cant || 100000000;
   console.log("Repeticiones:", repeticiones);
   const numerosFork = fork("./src/controllers/randoms.js");
 
   numerosFork.on("message", (result) => {
-    return res.status(200).json(result);
+    return res.status(200).send(result);
   });
 
-  numerosFork.send(repeticiones);
-  //res.send({ message: `getRandoms -> iteraciones: ${repeticiones}` });
+  numerosFork.send(repeticiones); // la cantidad de iteraciones
 };
 
 module.exports = { getInfo, getRandoms };
