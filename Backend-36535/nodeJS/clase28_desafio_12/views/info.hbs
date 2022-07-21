@@ -1,0 +1,24 @@
+<div class="alert alert-secondary">
+  <p class="display-6 text-primary">Información del sistema:</p>
+  <ul>
+    <li>Argumentos de Entrada:
+
+      {{#if argsInput}}
+        <ul>
+          {{#each argsInput}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      {{else}}
+        Sin argumentos de entrada
+      {{/if}}
+    </li>
+    <li>Nombre de la Plataforma (Sistema Operativo): {{platformSO}}</li>
+    <li>Version de node.js: {{nodeVersion}}</li>
+    <li>Memoria total reservada (rss): {{memRSS}}</li>
+
+    <li>Path de Ejecución: {{pathEjecucion}}</li>
+    <li>Id de Proceso: {{idProceso}}</li>
+    <li>Carpeta del Proyecto: {{pathProyecto}}</li>
+  </ul>
+</div>
